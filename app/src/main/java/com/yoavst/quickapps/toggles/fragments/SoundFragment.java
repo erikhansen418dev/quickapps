@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.media.AudioManager;
+import android.os.Build;
 import android.provider.Settings;
 
 import com.yoavst.quickapps.R;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -37,11 +38,10 @@ public class SoundFragment extends ToggleFragment {
 	static int vibrateIcon = -1;
 	static int silentIcon = -1;
 
-
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(SOUND);
-		mSystemUiResources = ((TogglesActivity)getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity) getActivity()).getSystemUiResource();
 		if (mRingerReceiver == null) {
 			mRingerReceiver = new BroadcastReceiver() {
 				@Override
@@ -93,7 +93,9 @@ public class SoundFragment extends ToggleFragment {
 				mAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 				break;
 			case AudioManager.RINGER_MODE_VIBRATE:
-				mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+					mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+				else mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
 				break;
 			case AudioManager.RINGER_MODE_SILENT:
 				mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);

@@ -10,7 +10,7 @@ import android.provider.Settings;
 
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -40,7 +40,7 @@ public class BluetoothFragment extends ToggleFragment {
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(BLUETOOTH);
-		mSystemUiResources = ((TogglesActivity)getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity)getActivity()).getSystemUiResource();
 		if (mBluetoothOnIcon == -1 || mBluetoothOffIcon == -1) {
 			mBluetoothOffIcon = mSystemUiResources.getIdentifier("indi_noti_bluetooth_off", "drawable", "com.android.systemui");
 			mBluetoothOnIcon = mSystemUiResources.getIdentifier("indi_noti_bluetooth_on", "drawable", "com.android.systemui");

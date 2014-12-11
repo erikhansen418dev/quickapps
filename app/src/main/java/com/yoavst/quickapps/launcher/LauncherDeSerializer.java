@@ -13,18 +13,18 @@ import java.lang.reflect.Type;
 /**
  * Created by Yoav.
  */
-public class LauncherDeSerializer implements JsonDeserializer<LauncherActivity.ListItem>, JsonSerializer<LauncherActivity.ListItem> {
+public class LauncherDeSerializer implements JsonDeserializer<CLauncherActivity.ListItem>, JsonSerializer<CLauncherActivity.ListItem> {
 	@Override
-	public LauncherActivity.ListItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+	public CLauncherActivity.ListItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 		JsonObject object = json.getAsJsonObject();
 		String name = object.get("name").getAsString();
 		String activity = object.has("activity-name") ? object.get("activity-name").getAsString() : "";
 		boolean enabled = !object.has("enabled") || object.get("enabled").getAsBoolean();
-		return new LauncherActivity.ListItem(name,null,activity,enabled);
+		return new CLauncherActivity.ListItem(name,null,activity,enabled);
 	}
 
     @Override
-    public JsonElement serialize(LauncherActivity.ListItem src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(CLauncherActivity.ListItem src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject object = new JsonObject();
         object.addProperty("name", src.name);
         object.addProperty("enabled", src.enabled);

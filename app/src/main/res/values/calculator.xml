@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="calculator_screen_number_deg">
-        <item name="android:textSize">@dimen/calculator_screen_number_deg</item>
-    </style>
-    <style name="button_layout_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-    <style name="button_style">
-        <item name="android:textSize">40.0dip</item>
-        <item name="android:background">@drawable/func_btn_selector</item>
-        <item name="android:paddingTop">0.0dip</item>
-        <item name="android:paddingBottom">1.0dip</item>
-        <item name="android:focusable">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-        <item name="android:paddingStart">2.25dip</item>
-        <item name="android:paddingEnd">2.25dip</item>
-    </style>
     <style name="basic_button_style">
         <item name="android:textSize">40.0dip</item>
         <item name="android:background">@android:color/transparent</item>
@@ -28,112 +8,32 @@
         <item name="android:focusable">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:src">@drawable/func_btn_selector</item>
         <item name="android:scaleType">fitXY</item>
         <item name="android:layout_weight">1.0</item>
         <item name="android:paddingStart">@dimen/button_paddingLeft</item>
         <item name="android:paddingEnd">@dimen/button_paddingRight</item>
     </style>
-    <style name="operator_button_style" parent="@style/button_style">
-        <item name="android:background">@drawable/func_btn_selector</item>
-    </style>
     <style name="basic_operator_button_style" parent="@style/basic_button_style">
-        <item name="android:background">@drawable/basic_operator_btn_selector</item>
-    </style>
-    <style name="digit_button_style" parent="@style/button_style">
-        <item name="android:background">@drawable/digit_btn_selector</item>
+        <item name="android:background">@drawable/calculator_btn_function_inset</item>
     </style>
     <style name="basic_digit_button_style" parent="@style/basic_button_style">
-        <item name="android:background">@drawable/basic_digit_btn_selector</item>
-    </style>
-    <style name="del_button_style" parent="@style/button_style">
-        <item name="android:background">@drawable/del_btn_selector</item>
-    </style>
-    <style name="all_clear_button_style" parent="@style/button_style">
-        <item name="android:background">@drawable/all_clear_btn_selector</item>
+        <item name="android:background">@drawable/calculator_btn_regular_inset</item>
     </style>
     <style name="basic_del_button_style" parent="@style/basic_button_style">
-        <item name="android:background">@drawable/basic_del_btn_selector</item>
+        <item name="android:background">@drawable/calculator_btn_delete_inset</item>
     </style>
     <style name="basic_all_clear_button_style" parent="@style/basic_button_style">
-        <item name="android:background">@drawable/basic_all_clear_btn_selector</item>
-    </style>
-    <style name="equal_button_style" parent="@style/button_style">
-        <item name="android:background">@drawable/equal_btn_selector</item>
+        <item name="android:background">@drawable/calculator_btn_ac_inset</item>
     </style>
     <style name="basic_equal_button_style" parent="@style/basic_button_style">
-        <item name="android:background">@drawable/basic_equal_btn_selector</item>
+        <item name="android:background">@drawable/calculator_btn_equal_inset</item>
     </style>
-    <style name="button_small_style" parent="@style/button_style">
-        <item name="android:textSize">30.0dip</item>
-    </style>
-
-    <style name="basic_screen_style">
-        <item name="android:paddingTop">@dimen/basic_screen_style_paddingTop</item>
-        <item name="android:paddingBottom">@dimen/basic_screen_style_paddingBottom</item>
-        <item name="android:paddingStart">@dimen/basic_screen_style_paddingLeft</item>
-        <item name="android:paddingEnd">@dimen/basic_screen_style_paddingRight</item>
-    </style>
-    <style name="screen_style">
-        <item name="android:paddingTop">@dimen/screen_style_paddingTop</item>
-        <item name="android:paddingBottom">@dimen/screen_style_paddingBottom</item>
-        <item name="android:paddingStart">@dimen/screen_style_paddingLeft</item>
-        <item name="android:paddingEnd">@dimen/screen_style_paddingRight</item>
-    </style>
-    <style name="btn_row_style">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.0dip</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-    <style name="btn_function_cell_style">
-        <item name="android:textSize">@dimen/btn_function_text_size</item>
-        <item name="android:layout_width">0.0dip</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-    <style name="btn_operation_cell_style">
-        <item name="android:textSize">@dimen/btn_operation_text_size</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">0.0dip</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-    <style name="btn_digit_cell_style">
-        <item name="android:textSize">@dimen/btn_digit_text_size</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">0.0dip</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-    </style>
-    <style name="btn_clear">
-        <item name="android:textSize">@dimen/btn_clear_text_size</item>
-        <item name="android:background">?android:selectableItemBackground</item>
-    </style>
-
-    <dimen name="btn_digit_text_size">40.0sp</dimen>
-    <dimen name="btn_operation_text_size">40.0sp</dimen>
-    <dimen name="btn_function_text_size">30.0sp</dimen>
-    <dimen name="btn_clear_text_size">30.0sp</dimen>
-    <dimen name="calculator_screen_number_deg">14.0dip</dimen>
-    <dimen name="no_history_text_size">18.0sp</dimen>
-    <dimen name="error_message_size">18.5dip</dimen>
     <dimen name="button_paddingTop">0.0dip</dimen>
     <dimen name="button_paddingLeft">0.0dip</dimen>
     <dimen name="button_paddingRight">0.0dip</dimen>
     <dimen name="button_paddingBottom">0.0dip</dimen>
-    <dimen name="basic_screen_style_QSlide_paddingRight">1.0dip</dimen>
-    <dimen name="basic_screen_style_paddingRight">15.0dip</dimen>
-    <dimen name="basic_screen_style_paddingLeft">0.0dip</dimen>
-    <dimen name="basic_screen_style_paddingTop">0.0dip</dimen>
-    <dimen name="basic_screen_style_paddingBottom">0.0dip</dimen>
-    <dimen name="screen_style_paddingRight">15.0dip</dimen>
-    <dimen name="screen_style_paddingLeft">18.5dip</dimen>
-    <dimen name="screen_style_paddingTop">6.0dip</dimen>
-    <dimen name="screen_style_paddingBottom">3.0dip</dimen>
-    
     <dimen name="calculator_dimen_top">50dp</dimen>
-    
+
     <string name="digit0" translatable="false">0</string>
     <string name="digit1" translatable="false">1</string>
     <string name="digit2" translatable="false">2</string>

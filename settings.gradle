@@ -1,1 +1,2 @@
-include ':app', ':base', ':facebook'
+include ':app', ':libs:navdrawer'
+include ':QCircle'

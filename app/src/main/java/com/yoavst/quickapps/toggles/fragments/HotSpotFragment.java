@@ -7,7 +7,7 @@ import android.provider.Settings;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.toggles.Connectivity;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -33,7 +33,7 @@ public class HotSpotFragment extends ToggleFragment {
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(HOT_SPOT);
-		mSystemUiResources = ((TogglesActivity) getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity) getActivity()).getSystemUiResource();
 		if (onIcon == -1 || offIcons == -1) {
 			offIcons = mSystemUiResources.getIdentifier("indi_noti_hotspot_off", "drawable", "com.android.systemui");
 			onIcon = mSystemUiResources.getIdentifier("indi_noti_hotspot_on", "drawable", "com.android.systemui");

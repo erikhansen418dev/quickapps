@@ -10,8 +10,8 @@ import android.os.BatteryManager;
 import android.widget.Toast;
 
 import com.yoavst.quickapps.R;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -53,22 +53,18 @@ public class BatteryFragment extends ToggleFragment {
 		if (percents != oldBatteryLevel || charging != oldCharging) {
 			// If charging
 			String resource;
-			if (charging != 0) {
-				if (percents <= 5) resource = "stat_sys_battery_weak_charging_05_vzw";
-				else if (percents <= 20) resource = "stat_sys_battery_weak_charging_10_vzw";
-				else if (percents <= 45) resource = "stat_sys_battery_weak_charging_30_vzw";
-				else if (percents <= 75) resource = "stat_sys_battery_weak_charging_60_vzw";
-				else if (percents != 100) resource = "stat_sys_battery_weak_charging_90_vzw";
-				else resource = "stat_sys_battery_full_charging";
-			} else {
+			if (charging != 0 && percents <= 5) resource = "stat_sys_battery_weak_charging_05_vzw";
+			else if (charging != 0 && percents > 95)
+				resource = "stat_sys_battery_full_charging";
+			else {
 				int percent1 = ((percents + 4) / 5 * 5);
 				if (percent1 > 100) percent1 = 100;
 				else if (percent1 < 0) percent1 = 0;
 				resource = "stat_sys_battery_" + percent1;
 			}
 			try {
-				mToggleIcon.setImageDrawable(((TogglesActivity) getActivity()).getSystemUiResource().getDrawable(
-						((TogglesActivity) getActivity()).getSystemUiResource().getIdentifier(resource, "drawable", "com.android.systemui")));
+				mToggleIcon.setImageDrawable(((CTogglesActivity) getActivity()).getSystemUiResource().getDrawable(
+						((CTogglesActivity) getActivity()).getSystemUiResource().getIdentifier(resource, "drawable", "com.android.systemui")));
 			} catch (Resources.NotFoundException exception) {
 				Toast.makeText(getActivity(), "Error - contact developer with battery level", Toast.LENGTH_SHORT).show();
 			}

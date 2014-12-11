@@ -1,19 +1,21 @@
 package com.yoavst.quickapps.notifications;
 
+import android.app.Fragment;
 import android.app.Notification;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yoavst.quickapps.BaseFragment;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.calendar.DateUtils;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
@@ -26,18 +28,20 @@ import java.util.Date;
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.notification_fragment)
-public class NotificationsFragment extends BaseFragment {
+@EFragment(R.layout.notification_circle_layout)
+public class NotificationsFragment extends Fragment {
 	@ViewById(R.id.notification_icon)
-	ImageView mNotificationIcon;
+	ImageView notificationIcon;
 	@ViewById(R.id.notification_time)
-	TextView mNotificationTime;
+	TextView notificationTime;
 	@ViewById(R.id.notification_title)
-	TextView mNotificationTitle;
+	TextView notificationTitle;
 	@ViewById(R.id.notification_text)
-	TextView mNotificationText;
+	TextView notificationText;
+	@ViewById(R.id.delete)
+	TextView delete;
 	@FragmentArg
-	StatusBarNotification mNotification;
+	StatusBarNotification notification;
 	static String today;
 	static String yesterday;
 	@Pref
@@ -47,7 +51,7 @@ public class NotificationsFragment extends BaseFragment {
 	private static final SimpleDateFormat hourFormatterAmPm = new SimpleDateFormat("hh:mm a");
 
 	public StatusBarNotification getNotification() {
-		return mNotification;
+		return notification;
 	}
 
 	@AfterViews
@@ -56,12 +60,14 @@ public class NotificationsFragment extends BaseFragment {
 			today = getString(R.string.today);
 			yesterday = getString(R.string.yesterday);
 		}
-		if (mNotification != null) {
-			Bundle extras = mNotification.getNotification().extras;
-			mNotificationTitle.setText(extras.getString(Notification.EXTRA_TITLE));
+		if (notification != null) {
+			delete.setVisibility(notification.isClearable() ? View.VISIBLE : View.GONE);
+			Bundle extras = notification.getNotification().extras;
+			notificationTitle.setText(extras.getString(Notification.EXTRA_TITLE));
 			try {
-				mNotificationIcon.setImageDrawable(getActivity().createPackageContext(mNotification.getPackageName(), 0).getResources().getDrawable(mNotification.getNotification().icon));
-			} catch (PackageManager.NameNotFoundException | Resources.NotFoundException ignored) {}
+				notificationIcon.setImageDrawable(getActivity().createPackageContext(notification.getPackageName(), 0).getResources().getDrawable(notification.getNotification().icon));
+			} catch (PackageManager.NameNotFoundException | Resources.NotFoundException ignored) {
+			}
 			if (mPrefs.notificationShowContent().get()) {
 				CharSequence preText = extras.getCharSequence(Notification.EXTRA_TEXT);
 				String text = preText == null ? null : preText.toString();
@@ -75,23 +81,26 @@ public class NotificationsFragment extends BaseFragment {
 						}
 					}
 				}
-				mNotificationText.setText(text);
+				notificationText.setText(text);
 			}
-			long time = mNotification.getPostTime();
+			long time = notification.getPostTime();
 			Date date = new Date(time);
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(time);
 			boolean isAmPm = mPrefs.amPmInNotifications().get();
 			if (DateUtils.isToday(date)) {
-				mNotificationTime.setText(today + " " + parseHour(date,isAmPm));
+				notificationTime.setText(today + " " + parseHour(date, isAmPm));
+			} else if (DateUtils.isYesterday(calendar)) {
+				notificationTime.setText(yesterday + " " + parseHour(date, isAmPm));
+			} else {
+				notificationTime.setText(dayFormatter.format(date) + ", " + parseHour(date, isAmPm));
 			}
-			else if (DateUtils.isYesterday(calendar)) {
-				mNotificationTime.setText(yesterday + " " + parseHour(date,isAmPm));
-			}
-			else {
-				mNotificationTime.setText(dayFormatter.format(date) + ", " + parseHour(date,isAmPm));
-			}
-		}
+		} else delete.setVisibility(View.GONE);
+	}
+
+	@Click(R.id.delete)
+	void onDeleteMessage() {
+		((CNotificationActivity)getActivity()).cancelNotification(notification);
 	}
 
 	String parseHour(Date date, boolean isAmPm) {

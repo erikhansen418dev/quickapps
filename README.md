@@ -4,13 +4,11 @@
 The application provide modules for the G3 Quick Circle Case.
 
 [![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](https://play.google.com/store/apps/details?id=com.yoavst.quickapps)  
-  
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/quick-apps/localized.png)](https://crowdin.com/project/quick-apps)
 
 ## How it works?
 The app uses LG Quick Circle SDK and QSlide SDK.  
 * Torch - Enable/Disable camera flash.  
-* Music - Register `NotificationListenerService` that implements `RemoteController.OnClientUpdateListener`.  
+* Music -Register `NotificationListenerService` that implements `RemoteController.OnClientUpdateListener`.
 * Notifications - Register another `NotificationListenerService`.  
 * Calendar - Reading events data from `CalendarContract.Events`.  
 * Toggles - Each toggles use its permissions to change the state.  
@@ -19,21 +17,7 @@ The app uses LG Quick Circle SDK and QSlide SDK.
 * News - Use Feedly Cloud Api to receive the newest 20 articles from the user feed.
 * Compass - Use Compass sensor.
 * Dialer - call `ACTION_CALL` intent. The on-call screen is LG's one.
-
-## Acknowledgements
-* LG for their Quick Circle and QSlide SDKs.  
-* Marco Kirchner (@BigBoot) for the compass module and more!
-* Excilys team for [Android annotations](https://github.com/excilys/androidannotations/wiki) that made my life a lot easier.  
-* Joan Zapata for [android-iconify](https://github.com/JoanZapata/android-iconify).  
-* Google for Android, Support V4, V13 packages, GSON and LibPhoneNumber.  
-* Jake Wharton for [viewpagerindicator](http://viewpagerindicator.com/).  
-* Pablo Fernandez For [Scribe-java](https://github.com/fernandezpablo85/scribe-java).  
-* [Jeppe Foldager](http://www.blackbearblanc.dk/) for its wonderful icons. 
-* Udo Klimaschewski For [EvalEx](https://github.com/uklimaschewski/EvalEx).
-* Evgeny Shishkin for [RobotoTextView](https://github.com/johnkil/Android-RobotoTextView).
-* Jeff Gilfelt for [SystemBarTint](https://github.com/jgilfelt/SystemBarTint).
-* Faiz Malkani for [FloatingActionButton](https://github.com/FaizMalkani/FloatingActionButton).
-* Vince Mi for [RoundedImageView](https://github.com/vinc3m1/RoundedImageView).
+* Magic 8 ball - Magic...
 
 License
 -------

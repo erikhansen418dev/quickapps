@@ -13,11 +13,11 @@ public class TorchReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		if (intent != null) {
-			CameraManager.init();
+			CameraManager.init(context);
 			if (mNotificationManager == null) mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-			PhoneActivity_.createNotification(context);
+			PhoneActivity.createNotification(context);
 			if (CameraManager.toggleTorch()) {
-				mNotificationManager.notify(NotificationReceiver.NOTIFICATION_ID, PhoneActivity_.mNotification);
+				mNotificationManager.notify(NotificationReceiver.NOTIFICATION_ID, PhoneActivity.notification);
 			} else {
 				mNotificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
 				CameraManager.destroy();

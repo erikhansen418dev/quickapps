@@ -14,7 +14,7 @@ public class ModulesAdapter extends FragmentPagerAdapter {
 	private final String[] TITLES;
 	public ModulesAdapter(FragmentManager fm, Context context) {
 		super(fm);
-		TITLES = context.getResources().getStringArray(R.array.modules);
+		TITLES = context.getApplicationContext().getResources().getStringArray(R.array.modules);
 	}
 
 	@Override
@@ -23,40 +23,40 @@ public class ModulesAdapter extends FragmentPagerAdapter {
 		switch (i) {
 			default:
 			case 0:
-				fragment = TorchFragment_.builder().build();
+				fragment = new TorchFragment();
 				break;
 			case 1:
-				fragment = MusicFragment_.builder().build();
+				fragment = new MusicFragment();
 				break;
 			case 2:
-				fragment = CalendarFragment_.builder().build();
+				fragment = new CalendarFragment();
 				break;
 			case 3:
-				fragment = NotificationsFragment_.builder().build();
+				fragment = new NotificationsFragment();
 				break;
 			case 4:
-				fragment = TogglesFragment_.builder().build();
+				fragment = new TogglesFragment();
 				break;
 			case 5:
-				fragment = LauncherFragment_.builder().build();
+				fragment = new LauncherFragment();
 				break;
 			case 6:
-				fragment = StopwatchFragment_.builder().build();
+				fragment = new StopwatchFragment();
 				break;
 			case 7:
-				fragment = CalculatorFragment_.builder().build();
+				fragment = new CalculatorFragment();
 				break;
             case 8:
-                fragment = CompassFragment_.builder().build();
+                fragment = new CompassFragment();
                 break;
 			case 9:
-				fragment = NewsFragment_.builder().build();
+				fragment = new NewsFragment();
 				break;
 			case 10:
-				fragment = DialerFragment_.builder().build();
+				fragment = new DialerFragment();
 				break;
 			case 11:
-				fragment = CompassFragment_.builder().build();
+				fragment = new CompassFragment();
 		}
 		return fragment;
 	}

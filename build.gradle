@@ -5,20 +5,17 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.2+'
-        classpath 'com.nobrain.gradle:gradle-play-publisher:0.1.3'
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'me.tatarka:gradle-retrolambda:2.4.1'
     }
 }
 
 allprojects {
     repositories {
-        maven {
-            url 'https://github.com/Goddchen/mvn-repo/raw/master/'
-        }
-        maven {
-            url "http://mente.github.io/facebook-api-android-aar"
-        }
         jcenter()
+        maven {
+            url 'https://raw.githubusercontent.com/Goddchen/mvn-repo/master/'
+        }
     }
 }

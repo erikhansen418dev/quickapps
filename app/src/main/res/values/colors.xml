@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary_color">@color/md_indigo_500</color>
+    <color name="primary_color_dark">@color/md_indigo_700</color>
+    <color name="accent_color">@color/md_pink_A200</color>
     <color name="torch_color_off">#747474</color>
     <color name="torch_color_on">#33B5E5</color>
     <color name="torch_background_color_off">#1D1D1D</color>
-    <color name="torch_background_color_on">#E1E1E1</color>
-    <color name="back_background_normal">#E9EDF0</color>
-    <color name="back_background_pressed">#C6C9CC</color>
-    <color name="back_background_dark_normal">@android:color/black</color>
-    <color name="back_background_dark_pressed">#C6C9CC</color>
-    <color name="primary">#3A0C53</color>
-    <color name="primary_dark">#2B093E</color>
-    <color name="grey_background">#eeeeee</color>
-    <color name="material_blue">#5677fc</color>
-    <color name="material_light_blue">#03a9f4</color>
+    <color name="torch_background_color_on">@android:color/white</color>
+    <color name="clock_theme_color">@color/md_brown_500</color>
+    <color name="control_button_default_color">#536E79</color>
+    <color name="control_button_default_color_transparent">#50536E79</color>
     <array name="icons_colors">
-        <item>#FF57BFB9</item>
-        <item>#FF754DAA</item>
-        <item>#FF62B08E</item>
-        <item>#FFF0B539</item>
-        <item>#FF7A8AA9</item>
-        <item>#0071BC</item>
-        <item>#FF996C68</item>
-        <item>#FF93A59B</item>
-        <item>#FF0081F6</item>
-        <item>#436F7D</item>
-        <item>#528AD1</item>
+        <item>@color/md_cyan_500</item>
+        <item>@color/md_deep_purple_500</item>
+        <item>@color/md_green_500</item>
+        <item>@color/md_orange_A400</item>
+        <item>@color/md_indigo_700</item>
+        <item>@color/primary_color</item>
+        <item>@color/md_brown_500</item>
+        <item>@color/md_grey_500</item>
+        <item>@color/md_blue_500</item>
+        <item>@color/md_teal_900</item>
+        <item>@color/md_blue_700</item>
         <item>#000000</item>
     </array>
 </resources>

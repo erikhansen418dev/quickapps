@@ -1,71 +1,51 @@
 package com.yoavst.quickapps.torch;
 
-import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
-
-import java.io.IOException;
+import android.content.Context;
 
 /**
  * Created by Yoav.
  */
 public class CameraManager {
-	private static Camera mCamera;
-	private static Camera.Parameters mParameters;
-	public static boolean torchOn = false;
+	private static CameraManagerImpl manager;
 
-	public static void init() {
-		if (mCamera == null) {
-			mCamera = Camera.open();
-			mParameters = mCamera.getParameters();
+	public static void init(Context context) {
+		if (manager == null) {
+			// FIXME use camera2 in lollipop
+			manager = new KitkatCameraManagerImpl();
 		}
+	}
+
+	public static boolean isTorchOn() {
+		return CameraManagerImpl.torchOn;
 	}
 
 	public static void destroy() {
-		if (mCamera != null) {
-			mCamera.release();
-			mCamera = null;
-		}
+		if (manager != null) manager.destroy();
 	}
 
-	/**
-	 * Toggle the torch
-	 *
-	 * @return false if the torch is now (after the process) off, true if on
-	 */
 	public static boolean toggleTorch() {
-		init();
-		boolean flashOnBefore = mParameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH);
-		if (flashOnBefore) {
-			disableTorch();
-			return false;
-		} else {
-			torch();
-			return true;
-		}
+		return manager != null && manager.toggleTorch();
 	}
 
 	public static void torch() {
-		if (mCamera != null && mParameters != null) {
-			if (!mParameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)) {
-				mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-				mCamera.setParameters(mParameters);
-				try {
-					mCamera.setPreviewTexture(new SurfaceTexture(0));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				mCamera.startPreview();
-				torchOn = true;
-			}
-		}
+		if (manager != null) manager.torch();
 	}
 
 	public static void disableTorch() {
-		if (mCamera != null && mParameters != null) {
-			mParameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-			mCamera.setParameters(mParameters);
-			mCamera.stopPreview();
-			torchOn = false;
-		}
+		if (manager != null) manager.disableTorch();
+	}
+
+	public static abstract class CameraManagerImpl {
+		public static boolean torchOn = false;
+
+		public abstract void init();
+
+		public abstract void destroy();
+
+		public abstract boolean toggleTorch();
+
+		public abstract void torch();
+
+		public abstract void disableTorch();
 	}
 }

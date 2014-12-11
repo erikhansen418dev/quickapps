@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.toggles.fragments.*;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;

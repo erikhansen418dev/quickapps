@@ -1,12 +1,11 @@
 package com.yoavst.quickapps.desktop.modules;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,40 +16,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mobeta.android.dslv.DragSortListView;
-import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
-import com.yoavst.quickapps.launcher.LauncherActivity;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+import com.yoavst.quickapps.launcher.CLauncherActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
+
+import mobeta.android.dslv.DragSortListView;
 
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.desktop_module_launcher)
-public class LauncherFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
-	@ViewById(R.id.load_externalg_checkbox)
-	CheckBox mLoadExternal;
-	@ViewById(R.id.auto_load_checkbox)
-	CheckBox mAutoLoad;
-	@ViewById(R.id.remove_lg_checkbox)
-	CheckBox mRemoveLg;
-	@Pref
-	Preferences_ mPrefs;
-	ArrayList<LauncherActivity.ListItem> mItems;
+public class LauncherFragment extends BaseModuleFragment {
+	ArrayList<CLauncherActivity.ListItem> mItems;
 	BroadcastReceiver installReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			LauncherActivity.defaultItems = null;
-			mItems = LauncherActivity.getIconsFromPrefs(getActivity());
+			CLauncherActivity.defaultItems = null;
+			mItems = CLauncherActivity.getIconsFromPrefs(getActivity());
 			sortItems();
 		}
 	};
@@ -71,74 +54,78 @@ public class LauncherFragment extends Fragment implements CompoundButton.OnCheck
 		getActivity().unregisterReceiver(installReceiver);
 	}
 
-	@AfterViews
-	void init() {
-		if (mPrefs.launcherItems().exists())
-			mItems = LauncherActivity.getIconsFromPrefs(getActivity());
+	@Override
+	int getLayoutId() {
+		return R.layout.desktop_module_launcher;
+	}
+
+	@Override
+	int[] getIdsForCheckboxes() {
+		return new int[]{R.id.load_externalg_checkbox,R.id.auto_load_checkbox,R.id.remove_lg_checkbox,R.id.orientation_switch};
+	}
+
+	@Override
+	int[] getIdsForRows() {
+		return new int[]{R.id.modules_auto_load_row, R.id.modules_load_external_row, R.id.modules_remove_lg_row, R.id.modules_orientation_row};
+	}
+
+	@Override
+	boolean shouldCheck(int id) {
+		switch (id) {
+			case R.id.load_externalg_checkbox:
+				return prefs.launcherLoadExternalModules().get();
+			case R.id.auto_load_checkbox:
+				return prefs.launcherAutoAddModules().get();
+			case R.id.remove_lg_checkbox:
+				return prefs.showAppsThatInLg().get();
+			default:
+			case R.id.orientation_switch:
+				return prefs.launcherIsVertical().get();
+		}
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (prefs.launcherItems().exists())
+			mItems = CLauncherActivity.getIconsFromPrefs(getActivity());
 		else
-			mItems = LauncherActivity.initDefaultIcons(getActivity());
-		sortItems();
-		mLoadExternal.setChecked(mPrefs.launcherLoadExternalModules().get());
-		mAutoLoad.setChecked(mPrefs.launcherAutoAddModules().get());
-		mRemoveLg.setChecked(mPrefs.showAppsThatInLg().get());
-		mLoadExternal.setOnCheckedChangeListener(this);
-		mAutoLoad.setOnCheckedChangeListener(this);
-		mRemoveLg.setOnCheckedChangeListener(this);
+			mItems = CLauncherActivity.initDefaultIcons(getActivity());
+		view.findViewById(R.id.modules_order_row).setOnClickListener(v -> onOpenSettingsClicked());
 	}
 
 	void sortItems() {
 		if (mItems != null && mItems.size() != 0) {
 			// We got to keep the same sort for checked, and put the unchecked at the end
-			ArrayList<LauncherActivity.ListItem> checked = new ArrayList<>();
-			ArrayList<LauncherActivity.ListItem> unchecked = new ArrayList<>();
-			for (LauncherActivity.ListItem mItem : mItems) {
+			ArrayList<CLauncherActivity.ListItem> checked = new ArrayList<>();
+			ArrayList<CLauncherActivity.ListItem> unchecked = new ArrayList<>();
+			for (CLauncherActivity.ListItem mItem : mItems) {
 				if (!mItem.enabled) unchecked.add(mItem);
 				else checked.add(mItem);
 			}
-			Collections.sort(unchecked, new Comparator<LauncherActivity.ListItem>() {
-				@Override
-				public int compare(LauncherActivity.ListItem lhs, LauncherActivity.ListItem rhs) {
-					return lhs.name.compareTo(rhs.name);
-				}
-			});
-			Collections.addAll(checked, unchecked.toArray(new LauncherActivity.ListItem[unchecked.size()]));
+			Collections.sort(unchecked, (lhs, rhs) -> lhs.name.compareTo(rhs.name));
+			Collections.addAll(checked, unchecked.toArray(new CLauncherActivity.ListItem[unchecked.size()]));
 			mItems = checked;
 		}
 	}
 
-	@Click(R.id.modules_order_row)
 	void onOpenSettingsClicked() {
 		final DragSortListView listview = (DragSortListView) LayoutInflater.from(getActivity()).inflate(R.layout.desktop_module_drag_list, null);
 		final Adapter adapter = new Adapter();
 		listview.setAdapter(adapter);
-		listview.setRemoveListener(new DragSortListView.RemoveListener() {
-
-			public void remove(int which) {
-				adapter.remove(adapter.getItem(which));
-			}
+		listview.setRemoveListener(which -> adapter.remove(adapter.getItem(which)));
+		listview.setDropListener((from, to) -> {
+			CLauncherActivity.ListItem item = adapter.getItem(from);
+			adapter.remove(item);
+			adapter.insert(item, to);
 		});
-		listview.setDropListener(new DragSortListView.DropListener() {
-
-			public void drop(int from, int to) {
-				LauncherActivity.ListItem item = adapter.getItem(from);
-				adapter.remove(item);
-				adapter.insert(item, to);
-			}
-		});
-		new AlertDialog.Builder(getActivity()).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				mPrefs.launcherItems().put(LauncherActivity.gson.toJson(mItems, LauncherActivity.listType));
-			}
-		}).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				init();
-			}
-		}).setView(listview).show();
+		new AlertDialog.Builder(getActivity()).setPositiveButton(android.R.string.yes, (dialog, which) ->
+				prefs.launcherItems().put(CLauncherActivity.gson.toJson(mItems, CLauncherActivity.listType)))
+				.setNegativeButton(android.R.string.no, (dialog, which) -> init())
+				.setView(listview).show();
 	}
 
-	private class Adapter extends ArrayAdapter<LauncherActivity.ListItem> {
+	private class Adapter extends ArrayAdapter<CLauncherActivity.ListItem> {
 
 		public Adapter() {
 			super(getActivity(), R.layout.desktop_module_launcher_item, mItems);
@@ -151,12 +138,9 @@ public class LauncherFragment extends Fragment implements CompoundButton.OnCheck
 				convertView = LayoutInflater.from(getActivity()).inflate(R.layout.desktop_module_launcher_item, parent, false);
 				holder = new ViewHolder(convertView);
 				holder.enabled.setTag(position);
-				holder.enabled.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						CheckBox check = (CheckBox) view;
-						getItem((Integer) check.getTag()).enabled = check.isChecked();
-					}
+				holder.enabled.setOnClickListener(view -> {
+					CheckBox check = (CheckBox) view;
+					getItem((Integer) check.getTag()).enabled = check.isChecked();
 				});
 				convertView.setTag(holder);
 			} else holder = (ViewHolder) convertView.getTag();
@@ -180,36 +164,25 @@ public class LauncherFragment extends Fragment implements CompoundButton.OnCheck
 		}
 	}
 
-	@Click({R.id.modules_auto_load_row, R.id.modules_load_external_row, R.id.modules_remove_lg_row})
-	void clickRow(View view) {
-		switch (view.getId()) {
-			case R.id.modules_load_external_row:
-				mLoadExternal.toggle();
-				break;
-			case R.id.modules_auto_load_row:
-				mAutoLoad.toggle();
-				break;
-			case R.id.modules_remove_lg_row:
-				mRemoveLg.toggle();
-				break;
-		}
-	}
-
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
 			case R.id.load_externalg_checkbox:
-				mPrefs.launcherLoadExternalModules().put(isChecked);
-				LauncherActivity.defaultItems = null;
-				mItems = LauncherActivity.getIconsFromPrefs(getActivity());
+				prefs.launcherLoadExternalModules().put(isChecked);
+				CLauncherActivity.defaultItems = null;
+				mItems = CLauncherActivity.getIconsFromPrefs(getActivity());
 				Toast.makeText(getActivity(), R.string.changed_successfully, Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.auto_load_checkbox:
-				mPrefs.launcherAutoAddModules().put(isChecked);
+				prefs.launcherAutoAddModules().put(isChecked);
 				Toast.makeText(getActivity(), R.string.changed_successfully, Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.remove_lg_checkbox:
-				mPrefs.showAppsThatInLg().put(isChecked);
+				prefs.showAppsThatInLg().put(isChecked);
+				Toast.makeText(getActivity(), R.string.changed_successfully, Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.orientation_switch:
+				prefs.launcherIsVertical().put(isChecked);
 				Toast.makeText(getActivity(), R.string.changed_successfully, Toast.LENGTH_SHORT).show();
 				break;
 		}

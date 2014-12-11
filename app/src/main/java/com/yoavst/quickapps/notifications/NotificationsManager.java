@@ -3,6 +3,7 @@ package com.yoavst.quickapps.notifications;
 import android.app.Notification;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,10 @@ public class NotificationsManager {
 	}
 
 	public static int getCount() { return notifications == null ? 0 : notifications.size(); }
+
+	public static void clean() {
+		notifications = null;
+	}
 
 	public static void setNotifications(ArrayList<StatusBarNotification> newNotifications) {
 		synchronized (LOCK) {
@@ -77,13 +82,7 @@ public class NotificationsManager {
 
 	private static void sort() {
 		if (notifications.size() >= 2)
-			Collections.sort(notifications, new Comparator<StatusBarNotification>() {
-				@Override
-				// return an integer < 0 if lhs is less than rhs, 0 if they are equal, and > 0 if lhs is greater than rhs
-				public int compare(StatusBarNotification lhs, StatusBarNotification rhs) {
-					return lhs.isClearable() ? (rhs.isClearable() ? 0 : -1) : (rhs.isClearable() ? 0 : -1);
-				}
-			});
+			Collections.sort(notifications, (lhs, rhs) -> lhs.isClearable() ? (rhs.isClearable() ? 0 : -1) : (rhs.isClearable() ? 0 : -1));
 	}
 
 	private static boolean equals(String a, String b) {

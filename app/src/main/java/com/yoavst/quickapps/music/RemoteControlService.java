@@ -6,49 +6,19 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.RemoteController;
 import android.media.RemoteController.MetadataEditor;
-import android.os.Binder;
-import android.os.IBinder;
-import android.service.notification.NotificationListenerService;
-import android.service.notification.StatusBarNotification;
 import android.view.KeyEvent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class RemoteControlService extends NotificationListenerService implements RemoteController.OnClientUpdateListener {
-
-	//dimensions in pixels for artwork
-	private static final int BITMAP_HEIGHT = 1100;
-	private static final int BITMAP_WIDTH = 1100;
-
-	//Binder for our service.
-	private IBinder mBinder = new RCBinder();
-
+public class RemoteControlService extends AbstractRemoteControlService implements RemoteController.OnClientUpdateListener {
 	private RemoteController mRemoteController;
 	private Context mContext;
-
 	private Field mPendingIntentField;
 
 	//external callback provided by user.
 	private RemoteController.OnClientUpdateListener mExternalClientUpdateListener;
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		if (intent.getAction().equals("com.yoavst.quickmusic.BIND_RC_CONTROL_SERVICE")) {
-			return mBinder;
-		} else {
-			return super.onBind(intent);
-		}
-	}
-
-	@Override
-	public void onNotificationPosted(StatusBarNotification notification) {
-	}
-
-	@Override
-	public void onNotificationRemoved(StatusBarNotification notification) {
-	}
 
 	@Override
 	public void onCreate() {
@@ -133,14 +103,7 @@ public class RemoteControlService extends NotificationListenerService implements
 		return mRemoteController.getEstimatedMediaPosition();
 	}
 
-	/**
-	 * Seeks to given position.
-	 *
-	 * @param ms Position in milliseconds.
-	 */
-	public void seekTo(long ms) {
-		mRemoteController.seekTo(ms);
-	}
+
 	//end of Binder methods.
 	//helper methods
 
@@ -193,7 +156,7 @@ public class RemoteControlService extends NotificationListenerService implements
 		} catch (NoSuchFieldException e) {
 			// Do nothing
 		}
-		}
+	}
 
 	private boolean sendKeyEvent(int keyCode) {
 		//send "down" and "up" keyevents.
@@ -205,35 +168,21 @@ public class RemoteControlService extends NotificationListenerService implements
 	}
 	//end of helper methods.
 
-	//the most simple Binder implementation
-	public class RCBinder extends Binder {
-		public RemoteControlService getService() {
-			return RemoteControlService.this;
-		}
-	}
-
 	public Intent getCurrentClientIntent() {
 		PendingIntent clientIntent;
 		try {
 			clientIntent = (PendingIntent) mPendingIntentField.get(mRemoteController);
-
-			if(clientIntent == null) return null;
-
+			if (clientIntent == null) return null;
 			String packageName = clientIntent.getCreatorPackage();
-
-			if(packageName == null) return null;
-
+			if (packageName == null) return null;
 			Intent result = getPackageManager().getLaunchIntentForPackage(packageName);
-
-			if(result == null) return null;
-
+			if (result == null) return null;
 			result.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			return result;
 		} catch (Exception exception) {
 			return null;
 		}
 	}
-
 
 	//implementation of RemoteController.OnClientUpdateListener. Does nothing other than calling external callback.
 	@Override

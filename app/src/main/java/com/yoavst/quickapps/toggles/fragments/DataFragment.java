@@ -11,7 +11,7 @@ import android.provider.Settings;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.toggles.Connectivity;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -46,7 +46,7 @@ public class DataFragment extends ToggleFragment {
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(DATA);
-		mSystemUiResources = ((TogglesActivity) getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity) getActivity()).getSystemUiResource();
 		if (dataOnIcon == -1 || dataOffIcon == -1 || dataForcedOffIcon == -1) {
 			dataOnIcon = mSystemUiResources.getIdentifier("indi_noti_data_on", "drawable", "com.android.systemui");
 			dataOffIcon = mSystemUiResources.getIdentifier("indi_noti_data_off", "drawable", "com.android.systemui");

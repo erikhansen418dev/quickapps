@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -25,51 +26,45 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.desktop_module_notifications)
-public class NotificationsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
-
-	@ViewById(R.id.privacy_checkbox)
-	CheckBox mPrivacy;
-	@ViewById(R.id.am_pm_checkbox)
-	CheckBox mAmPm;
-	@Pref
-	Preferences_ mPrefs;
-
-	@Click(R.id.listener_row)
-	void onOpenSettingsClicked() {
-		getActivity().startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+public class NotificationsFragment extends BaseModuleFragment implements CompoundButton.OnCheckedChangeListener {
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		view.findViewById(R.id.listener_row).setOnClickListener(v -> getActivity().startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")));
 	}
 
-	@AfterViews
-	void init() {
-		mPrivacy.setChecked(mPrefs.notificationShowContent().get());
-		mPrivacy.setOnCheckedChangeListener(this);
-		mAmPm.setChecked(mPrefs.amPmInNotifications().get());
-		mAmPm.setOnCheckedChangeListener(this);
+	@Override
+	int getLayoutId() {
+		return R.layout.desktop_module_notifications;
+	}
+
+	@Override
+	int[] getIdsForCheckboxes() {
+		return new int[]{R.id.privacy_checkbox,R.id.am_pm_checkbox};
+	}
+
+	@Override
+	int[] getIdsForRows() {
+		return new int[]{R.id.privacy_row, R.id.am_pm_row};
+	}
+
+	@Override
+	boolean shouldCheck(int id) {
+		if (id == R.id.privacy_checkbox) return prefs.notificationShowContent().get();
+		else return prefs.amPmInNotifications().get();
 	}
 
 
-	@Click({R.id.privacy_row, R.id.am_pm_row})
-	void clickRow(View view) {
-		switch (view.getId()) {
-			case R.id.privacy_row:
-				mPrivacy.toggle();
-				break;
-			case R.id.am_pm_row:
-				mAmPm.toggle();
-				break;
-		}
-	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
 			case R.id.privacy_checkbox:
-				mPrefs.notificationShowContent().put(isChecked);
+				prefs.notificationShowContent().put(isChecked);
 				Toast.makeText(getActivity(), R.string.changed_successfully,Toast.LENGTH_SHORT).show();
 				break;
 			case R.id.am_pm_checkbox:
-				mPrefs.amPmInNotifications().put(isChecked);
+				prefs.amPmInNotifications().put(isChecked);
 				Toast.makeText(getActivity(), R.string.changed_successfully,Toast.LENGTH_SHORT).show();
 				break;
 		}

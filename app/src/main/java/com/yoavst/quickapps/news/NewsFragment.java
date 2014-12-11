@@ -1,8 +1,8 @@
 package com.yoavst.quickapps.news;
 
+import android.app.Fragment;
 import android.widget.TextView;
 
-import com.yoavst.quickapps.BaseFragment;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.news.types.Entry;
 
@@ -17,8 +17,8 @@ import java.util.Date;
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.news_fragment)
-public class NewsFragment extends BaseFragment {
+@EFragment(R.layout.news_circle_fragment)
+public class NewsFragment extends Fragment {
 	@ViewById(R.id.news_time)
 	TextView mTime;
 	@ViewById(R.id.news_title)

@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.DISPLAY_COLOR;
@@ -146,14 +147,10 @@ public class CalendarUtil {
 				repeatingCursor.close();
 			}
 		}
-		Collections.sort(events, new Comparator<Event>() {
-			@Override
-			//an integer < 0 if lhs is less than rhs, 0 if they are equal, and > 0 if lhs is greater than rhs.
-			public int compare(Event lhs, Event rhs) {
-				int first = (lhs.getStartDate() - rhs.getStartDate()) < 0 ? -1 : lhs.getStartDate() == rhs.getStartDate() ? 0 : 1;
-				int second = (lhs.getEndDate() - rhs.getEndDate()) < 0 ? -1 : lhs.getEndDate() == rhs.getEndDate() ? 0 : 1;
-				return first != 0 ? first : second;
-			}
+		Collections.sort(events, (lhs, rhs) -> {
+			int first = (lhs.getStartDate() - rhs.getStartDate()) < 0 ? -1 : lhs.getStartDate() == rhs.getStartDate() ? 0 : 1;
+			int second = (lhs.getEndDate() - rhs.getEndDate()) < 0 ? -1 : lhs.getEndDate() == rhs.getEndDate() ? 0 : 1;
+			return first != 0 ? first : second;
 		});
 		return events;
 	}
@@ -298,13 +295,13 @@ public class CalendarUtil {
 		else {
 			long secondsLeft = (calendar.getTimeInMillis() - now.getTimeInMillis()) / 1000;
 			if (secondsLeft < 60) return CalendarResources.in + " 1 " + CalendarResources.minute;
-			long minutesLeft = secondsLeft / 60;
+			long minutesLeft = TimeUnit.SECONDS.toMinutes(secondsLeft);
 			if (minutesLeft < 60)
 				return CalendarResources.in + " " + minutesLeft + " " + (minutesLeft > 1 ? CalendarResources.minutes : CalendarResources.minute);
-			long hoursLeft = minutesLeft / 50;
+			long hoursLeft = TimeUnit.MINUTES.toHours(minutesLeft);
 			if (hoursLeft < 24)
 				return CalendarResources.in + " " + hoursLeft + " " + (hoursLeft > 1 ? CalendarResources.hours : CalendarResources.hour);
-			int days = (int) (hoursLeft / 24);
+			int days = (int) TimeUnit.HOURS.toDays(hoursLeft);
 			if (days < 30)
 				return CalendarResources.in + " " + days + " " + (days > 1 ? CalendarResources.days : CalendarResources.day);
 			int months = days / 30;

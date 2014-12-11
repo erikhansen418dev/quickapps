@@ -1,9 +1,9 @@
 package com.yoavst.quickapps.calendar;
 
+import android.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.yoavst.quickapps.BaseFragment;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
 
@@ -17,34 +17,34 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.calendar_fragment)
-public class EventsFragment extends BaseFragment {
-	@ViewById(R.id.title)
-	TextView mTitle;
-	@ViewById(R.id.location)
-	TextView mLocation;
-	@ViewById(R.id.date)
-	TextView mDate;
+@EFragment(R.layout.calendar_circle_layout)
+public class EventsFragment extends Fragment {
+	@ViewById
+	TextView title;
+	@ViewById
+	TextView location;
+	@ViewById
+	TextView date;
 	@ViewById(R.id.time_left)
-	TextView mTimeLeft;
+	TextView timeLeft;
 	@StringRes(R.string.unknown)
 	static String UNKNOWN;
 	@FragmentArg
 	Event event;
 	@Pref
-	Preferences_ mPrefs;
+	Preferences_ prefs;
 
 	@AfterViews
 	void init() {
 		CalendarUtil.CalendarResources.init(getActivity());
-		mTitle.setText(event.getTitle());
-		if (!mPrefs.showLocation().get() || event.getLocation() == null || event.getLocation().length() == 0)
-			mLocation.setVisibility(View.GONE);
+		title.setText(event.getTitle());
+		if (!prefs.showLocation().get() || event.getLocation() == null || event.getLocation().length() == 0)
+			location.setVisibility(View.GONE);
 		else {
-			mLocation.setVisibility(View.VISIBLE);
-			mLocation.setText("At " + event.getLocation());
+			location.setVisibility(View.VISIBLE);
+			location.setText("At " + event.getLocation());
 		}
-		mDate.setText(CalendarUtil.getDateFromEvent(event));
-		mTimeLeft.setText(CalendarUtil.getTimeToEvent(event));
+		date.setText(CalendarUtil.getDateFromEvent(event));
+		timeLeft.setText(CalendarUtil.getTimeToEvent(event));
 	}
 }

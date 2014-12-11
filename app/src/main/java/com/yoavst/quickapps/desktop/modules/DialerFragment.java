@@ -3,61 +3,62 @@ package com.yoavst.quickapps.desktop.modules;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.Nullable;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
-import com.yoavst.quickapps.dialer.DialerFragment_;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.LongClick;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+import com.yoavst.quickapps.dialer.CDialerActivity;
 
 import java.util.HashMap;
 
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.desktop_module_dialer)
 public class DialerFragment extends Fragment {
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.desktop_module_dialer, container, false);
+		for (int id : new int[]{R.id.digit1, R.id.digit2, R.id.digit3,
+				R.id.digit4, R.id.digit5, R.id.digit6, R.id.digit7, R.id.digit8, R.id.digit9}) {
+			View digit = v.findViewById(id);
+			digit.setOnClickListener(this::onQuickDialClicked);
+			digit.setOnLongClickListener(this::onQuickDialLongClicked);
+		}
+		prefs = new Preferences_(getActivity());
+		quickNumbers = new Gson().fromJson(prefs.quickDials().get(), CDialerActivity.QUICK_NUMBERS_TYPE);
+		if (quickNumbers == null) quickNumbers = new HashMap<>(10);
+		return v;
+	}
 
-	@Pref
-	Preferences_ mPrefs;
-	HashMap<Integer, Pair<String, String>> mQuickNumbers;
+	Preferences_ prefs;
+	HashMap<Integer, Pair<String, String>> quickNumbers;
 	int lastNum = -1;
 	public static final int PICK_CONTACT_REQUEST = 42;
 
-	@AfterViews
-	void init() {
-		mQuickNumbers = new Gson().fromJson(mPrefs.quickDials().get(), DialerFragment_.QUICK_NUMBERS_TYPE);
-		if (mQuickNumbers == null) mQuickNumbers = new HashMap<>(10);
-	}
-
-	@Click({R.id.digit1, R.id.digit2, R.id.digit3,
-			R.id.digit4, R.id.digit5, R.id.digit6, R.id.digit7, R.id.digit8, R.id.digit9})
 	void onQuickDialClicked(View view) {
 		lastNum = Integer.parseInt((String) view.getTag());
 		startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), PICK_CONTACT_REQUEST);
 	}
 
-	@LongClick({R.id.digit1, R.id.digit2, R.id.digit3,
-			R.id.digit4, R.id.digit5, R.id.digit6, R.id.digit7, R.id.digit8, R.id.digit9})
-	void onQuickDialLongClicked(View view) {
+	boolean onQuickDialLongClicked(View view) {
 		lastNum = Integer.parseInt((String) view.getTag());
-		if (mQuickNumbers.containsKey(lastNum)) {
-			Pair<String, String> number = mQuickNumbers.get(lastNum);
+		if (quickNumbers.containsKey(lastNum)) {
+			Pair<String, String> number = quickNumbers.get(lastNum);
 			Toast.makeText(getActivity(), number.first + " " + number.second, Toast.LENGTH_SHORT).show();
 		} else Toast.makeText(getActivity(), R.string.empty_speed_dial, Toast.LENGTH_SHORT).show();
+		return true;
 	}
 
 	@Override
@@ -94,17 +95,7 @@ public class DialerFragment extends Fragment {
 							}
 							new AlertDialog.Builder(getActivity())
 									.setTitle(R.string.choose_number)
-									.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											dialog.dismiss();
-										}
-									}).setItems(phones, new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									putNumber(name, phones[which]);
-								}
-							}).show();
+									.setNegativeButton(android.R.string.no, (dialog, which) -> dialog.dismiss()).setItems(phones, (dialog, which) -> putNumber(name, phones[which])).show();
 						}
 					} else
 						Toast.makeText(getActivity(), android.R.string.emptyPhoneNumber, Toast.LENGTH_SHORT).show();
@@ -114,8 +105,8 @@ public class DialerFragment extends Fragment {
 	}
 
 	void putNumber(String name, String number) {
-		mQuickNumbers.put(lastNum, Pair.create(name, number));
-		mPrefs.quickDials().put(new Gson().toJson(mQuickNumbers, com.yoavst.quickapps.dialer.DialerFragment.QUICK_NUMBERS_TYPE));
+		quickNumbers.put(lastNum, Pair.create(name, number));
+		prefs.quickDials().put(new Gson().toJson(quickNumbers, CDialerActivity.QUICK_NUMBERS_TYPE));
 		lastNum = -1;
 	}
 

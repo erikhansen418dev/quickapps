@@ -1,19 +1,20 @@
 <resources>
 
     <style name="darkTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">
-        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicatorDark</item>
-    </style>
-
-    <style name="lightTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicatorLight</item>
     </style>
 
-    <style name="CustomCirclePageIndicatorDark">
-        <item name="fillColor">#FFF</item>
-        <item name="strokeColor">#FFF</item>
-        <item name="strokeWidth">1dp</item>
-        <item name="radius">5dp</item>
-        <item name="centered">true</item>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="toolbarStyle">@style/AppTheme.Toolbar</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicatorLight</item>
+    </style>
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
     <style name="CustomCirclePageIndicatorLight">
@@ -22,22 +23,6 @@
         <item name="strokeWidth">1dp</item>
         <item name="radius">5dp</item>
         <item name="centered">true</item>
-        <item name="android:background">#FFF</item>
-    </style>
-
-    <style name="AppTheme" parent="android:Theme.Holo.Light.NoActionBar">
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_drawer</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:clipToPadding">false</item>
-        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicatorLight</item>
-    </style>
-
-    <style name="Widget.Styled.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:displayOptions">homeAsUp|showTitle</item>
-        <item name="android:background">@color/primary</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 </resources>

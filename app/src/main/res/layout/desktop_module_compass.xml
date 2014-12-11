@@ -4,8 +4,8 @@
                 android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/top_margin_modules"
+        android:layout_height="@dimen/top_margin_modules"
         android:src="@drawable/ic_empty"
         android:layout_centerInParent="true"/>
 </RelativeLayout>

@@ -6,7 +6,7 @@ import android.provider.Settings;
 
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -43,7 +43,7 @@ public class BrightnessFragment extends ToggleFragment {
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(BRIGHTNESS);
-		mSystemUiResources = ((TogglesActivity) getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity) getActivity()).getSystemUiResource();
 		if (maxBrightnessIcon == -1 || medBrightnessIcon == -1 || autoBrightnessIcon == -1) {
 			maxBrightnessIcon = mSystemUiResources.getIdentifier("indi_noti_brightness_max_on", "drawable", "com.android.systemui");
 			autoBrightnessIcon = mSystemUiResources.getIdentifier("indi_noti_brightness_auto_on", "drawable", "com.android.systemui");

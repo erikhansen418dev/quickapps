@@ -16,17 +16,17 @@ import java.util.Arrays;
  */
 public class NotificationService extends NotificationListenerService {
 	private final IBinder mBinder = new LocalBinder();
-	private Callback mCallback;
+	private Callback callback;
 	public static final String NOTIFICATION_ACTION = "notification_action";
 
 	@Override
 	public void onNotificationPosted(StatusBarNotification sbn) {
-		if (mCallback != null) mCallback.onNotificationPosted(sbn);
+		if (callback != null) callback.onNotificationPosted(sbn);
 	}
 
 	@Override
 	public void onNotificationRemoved(StatusBarNotification sbn) {
-		if (mCallback != null) mCallback.onNotificationRemoved(sbn);
+		if (callback != null) callback.onNotificationRemoved(sbn);
 	}
 
 	@Override
@@ -38,15 +38,21 @@ public class NotificationService extends NotificationListenerService {
 		}
 	}
 
+	@Override
+	public boolean onUnbind(Intent intent) {
+		callback = null;
+		return super.onUnbind(intent);
+	}
+
 	public void setCallback(Callback callback, Runnable runnable) {
-		mCallback = callback;
-		if (mCallback != null) {
+		this.callback = callback;
+		if (this.callback != null) {
 			ContentResolver contentResolver = getContentResolver();
 			String enabledNotificationListeners = Settings.Secure.getString(contentResolver, "enabled_notification_listeners");
 			String packageName = getPackageName();
 			// check to see if the enabledNotificationListeners String contains our package name
 			if (enabledNotificationListeners == null || !enabledNotificationListeners.contains(packageName) || !enabledNotificationListeners.contains("NotificationService")) {
-				mCallback.noPermissionForNotifications();
+				this.callback.noPermissionForNotifications();
 			} else runnable.run();
 		}
 	}
@@ -55,7 +61,7 @@ public class NotificationService extends NotificationListenerService {
 		try {
 			NotificationsManager.setNotifications(new ArrayList<>(Arrays.asList(getActiveNotifications())));
 		} catch (Exception exception) {
-			mCallback.noPermissionForNotifications();
+			callback.noPermissionForNotifications();
 		}
 	}
 

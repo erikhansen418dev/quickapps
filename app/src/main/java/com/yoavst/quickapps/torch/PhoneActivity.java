@@ -5,47 +5,37 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.IconTextView;
+import android.widget.TextView;
 
 import com.lge.app.floating.FloatableActivity;
 import com.lge.app.floating.FloatingWindow;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
 
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.ColorRes;
-import org.androidannotations.annotations.sharedpreferences.Pref;
-
-@EActivity(R.layout.torch_activity_phone)
 public class PhoneActivity extends FloatableActivity {
-	@ViewById(R.id.layout)
-	ViewGroup mLayout;
-	@ViewById(R.id.torch)
-	IconTextView mTorch;
-	@ColorRes(R.color.torch_background_color_on)
-	static int mColorBackgroundOn;
-	@ColorRes(R.color.torch_background_color_off)
-	static int mColorBackgroundOff;
-	@ColorRes(R.color.torch_color_on)
-	static int mColorTorchOn;
-	@ColorRes(R.color.torch_color_off)
-	static int mColorTorchOff;
-	NotificationManager mNotificationManager;
-	@Pref
-	Preferences_ prefs;
-	public static Notification mNotification;
+	private static final String TORCH_OFF = "{md-flash-off}";
+	private static final String TORCH_ON = "{md-flash-on}";
+	private static int colorBackgroundOn;
+	private static int colorBackgroundOff;
+	private static int colorTorchOn;
+	private static int colorTorchOff;
+	private NotificationManager notificationManager;
+	private TextView icon;
+	public static Notification notification;
 
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		setContentView(R.layout.torch_layout);
+		icon = (TextView) findViewById(R.id.icon);
+		icon.setOnClickListener(v -> toggleTorch());
+		colorBackgroundOn = getResources().getColor(R.color.torch_background_color_on);
+		colorBackgroundOff = getResources().getColor(R.color.torch_background_color_off);
+		colorTorchOn = getResources().getColor(R.color.torch_color_on);
+		colorTorchOff = getResources().getColor(R.color.torch_color_off);
+		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		createNotification(this);
-		if (prefs.torchForceFloating().get())
+		if (new Preferences_(this).torchForceFloating().get())
 			switchToFloatingMode();
 
 	}
@@ -53,44 +43,34 @@ public class PhoneActivity extends FloatableActivity {
 	@Override
 	public void onAttachedToFloatingWindow(FloatingWindow w) {
 		super.onAttachedToFloatingWindow(w);
-		mLayout = (ViewGroup) findViewById(R.id.layout);
-		mTorch = (IconTextView) findViewById(R.id.torch);
-		mLayout.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				toggleTorch();
-			}
-		});
+		icon = (TextView) findViewById(R.id.icon);
+		icon.setOnClickListener(v -> toggleTorch());
 	}
 
 	@Override
 	public boolean onDetachedFromFloatingWindow(FloatingWindow w, boolean isReturningToFullScreen) {
 		if (!isReturningToFullScreen) {
-			if (CameraManager.torchOn)
-				mNotificationManager.notify(NotificationReceiver.NOTIFICATION_ID, mNotification);
+			if (CameraManager.isTorchOn())
+				notificationManager.notify(NotificationReceiver.NOTIFICATION_ID, notification);
 			else CameraManager.destroy();
 		}
 		return super.onDetachedFromFloatingWindow(w, isReturningToFullScreen);
 	}
 
 	public static void createNotification(Context context) {
-		if (mNotification == null) {
+		if (notification == null) {
 			Intent intent = new Intent("com.yoavst.notificationtorch");
 			PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-			// Build notification
-			Notification.Builder notificationBuilder = new Notification.Builder(context)
+			notification = new Notification.Builder(context)
 					.setContentTitle(context.getString(R.string.torch_is_on))
-					.setContentText(context.getString(R.string.touch_to_turn_off)).setSmallIcon(R.drawable.torch_icon)
+					.setContentText(context.getString(R.string.touch_to_turn_off))
+					.setSmallIcon(R.drawable.ic_noti_torch)
 					.setAutoCancel(true)
-					.setContentIntent(pIntent);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-				mNotification = notificationBuilder.build();
-			else mNotification = notificationBuilder.getNotification();
-			mNotification.flags |= Notification.FLAG_ONGOING_EVENT;
+					.setContentIntent(pIntent).build();
+			notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		}
 	}
 
-	@Click(R.id.layout)
 	void toggleTorch() {
 		if (CameraManager.toggleTorch()) {
 			showTorchOn();
@@ -100,21 +80,21 @@ public class PhoneActivity extends FloatableActivity {
 	}
 
 	private void showTorchOn() {
-		mTorch.setText("{fa-bolt}");
-		mTorch.setTextColor(mColorTorchOn);
-		mLayout.setBackgroundColor(mColorBackgroundOn);
+		icon.setText(TORCH_ON);
+		icon.setTextColor(colorTorchOn);
+		icon.setBackgroundColor(colorBackgroundOn);
 	}
 
 	private void showTorchOff() {
-		mTorch.setText("{fa-power-off}");
-		mTorch.setTextColor(mColorTorchOff);
-		mLayout.setBackgroundColor(mColorBackgroundOff);
+		icon.setText(TORCH_OFF);
+		icon.setTextColor(colorTorchOff);
+		icon.setBackgroundColor(colorBackgroundOff);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mNotificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
+		notificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
 		CameraManager.destroy();
 	}
 
@@ -129,17 +109,17 @@ public class PhoneActivity extends FloatableActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (CameraManager.torchOn)
-			mNotificationManager.notify(NotificationReceiver.NOTIFICATION_ID, mNotification);
+		if (CameraManager.isTorchOn())
+			notificationManager.notify(NotificationReceiver.NOTIFICATION_ID, notification);
 		else CameraManager.destroy();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		CameraManager.init();
-		mNotificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
-		if (CameraManager.torchOn) {
+		CameraManager.init(this);
+		notificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
+		if (CameraManager.isTorchOn()) {
 			showTorchOn();
 			CameraManager.torch();
 		} else

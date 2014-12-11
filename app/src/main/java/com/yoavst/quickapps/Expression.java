@@ -39,7 +39,7 @@ import java.util.Stack;
 
 /**
  * <h1>EvalEx - Java Expression Evaluator</h1>
- *
+ * <p>
  * <h2>Introduction</h2>
  * EvalEx is a handy expression evaluator for Java, that allows to evaluate simple mathematical and boolean expressions.
  * <br>
@@ -81,73 +81,73 @@ import java.util.Stack;
  * <br>
  * <h2>Supported Operators</h2>
  * <table>
- *   <tr><th>Mathematical Operators</th></tr>
- *   <tr><th>Operator</th><th>Description</th></tr>
- *   <tr><td>+</td><td>Additive operator</td></tr>
- *   <tr><td>-</td><td>Subtraction operator</td></tr>
- *   <tr><td>*</td><td>Multiplication operator</td></tr>
- *   <tr><td>/</td><td>Division operator</td></tr>
- *   <tr><td>%</td><td>Remainder operator (Modulo)</td></tr>
- *   <tr><td>^</td><td>Power operator</td></tr>
+ * <tr><th>Mathematical Operators</th></tr>
+ * <tr><th>Operator</th><th>Description</th></tr>
+ * <tr><td>+</td><td>Additive operator</td></tr>
+ * <tr><td>-</td><td>Subtraction operator</td></tr>
+ * <tr><td>*</td><td>Multiplication operator</td></tr>
+ * <tr><td>/</td><td>Division operator</td></tr>
+ * <tr><td>%</td><td>Remainder operator (Modulo)</td></tr>
+ * <tr><td>^</td><td>Power operator</td></tr>
  * </table>
  * <br>
  * <table>
- *   <tr><th>Boolean Operators<sup>*</sup></th></tr>
- *   <tr><th>Operator</th><th>Description</th></tr>
- *   <tr><td>=</td><td>Equals</td></tr>
- *   <tr><td>==</td><td>Equals</td></tr>
- *   <tr><td>!=</td><td>Not equals</td></tr>
- *   <tr><td>&lt;&gt;</td><td>Not equals</td></tr>
- *   <tr><td>&lt;</td><td>Less than</td></tr>
- *   <tr><td>&lt;=</td><td>Less than or equal to</td></tr>
- *   <tr><td>&gt;</td><td>Greater than</td></tr>
- *   <tr><td>&gt;=</td><td>Greater than or equal to</td></tr>
- *   <tr><td>&amp;&amp;</td><td>Boolean and</td></tr>
- *   <tr><td>||</td><td>Boolean or</td></tr>
+ * <tr><th>Boolean Operators<sup>*</sup></th></tr>
+ * <tr><th>Operator</th><th>Description</th></tr>
+ * <tr><td>=</td><td>Equals</td></tr>
+ * <tr><td>==</td><td>Equals</td></tr>
+ * <tr><td>!=</td><td>Not equals</td></tr>
+ * <tr><td>&lt;&gt;</td><td>Not equals</td></tr>
+ * <tr><td>&lt;</td><td>Less than</td></tr>
+ * <tr><td>&lt;=</td><td>Less than or equal to</td></tr>
+ * <tr><td>&gt;</td><td>Greater than</td></tr>
+ * <tr><td>&gt;=</td><td>Greater than or equal to</td></tr>
+ * <tr><td>&amp;&amp;</td><td>Boolean and</td></tr>
+ * <tr><td>||</td><td>Boolean or</td></tr>
  * </table>
  * *Boolean operators result always in a BigDecimal value of 1 or 0 (zero). Any non-zero value is treated as a _true_ value. Boolean _not_ is implemented by a function.
  * <br>
  * <h2>Supported Functions</h2>
  * <table>
- *   <tr><th>Function<sup>*</sup></th><th>Description</th></tr>
- *   <tr><td>NOT(<i>expression</i>)</td><td>Boolean negation, 1 (means true) if the expression is not zero</td></tr>
- *   <tr><td>IF(<i>condition</i>,<i>value_if_true</i>,<i>value_if_false</i>)</td><td>Returns one value if the condition evaluates to true or the other if it evaluates to false</td></tr>
- *   <tr><td>RANDOM()</td><td>Produces a random number between 0 and 1</td></tr>
- *   <tr><td>MIN(<i>e1</i>,<i>e2</i>)</td><td>Returns the smaller of both expressions</td></tr>
- *   <tr><td>MAX(<i>e1</i>,<i>e2</i>)</td><td>Returns the bigger of both expressions</td></tr>
- *   <tr><td>ABS(<i>expression</i>)</td><td>Returns the absolute (non-negative) value of the expression</td></tr>
- *   <tr><td>ROUND(<i>expression</i>,precision)</td><td>Rounds a value to a certain number of digits, uses the current rounding mode</td></tr>
- *   <tr><td>FLOOR(<i>expression</i>)</td><td>Rounds the value down to the nearest integer</td></tr>
- *   <tr><td>CEILING(<i>expression</i>)</td><td>Rounds the value up to the nearest integer</td></tr>
- *   <tr><td>LOG(<i>expression</i>)</td><td>Returns the natural logarithm (base e) of an expression</td></tr>
- *   <tr><td>SQRT(<i>expression</i>)</td><td>Returns the square root of an expression</td></tr>
- *   <tr><td>SIN(<i>expression</i>)</td><td>Returns the trigonometric sine of an angle (in degrees)</td></tr>
- *   <tr><td>COS(<i>expression</i>)</td><td>Returns the trigonometric cosine of an angle (in degrees)</td></tr>
- *   <tr><td>TAN(<i>expression</i>)</td><td>Returns the trigonometric tangens of an angle (in degrees)</td></tr>
- *   <tr><td>SINH(<i>expression</i>)</td><td>Returns the hyperbolic sine of a value</td></tr>
- *   <tr><td>COSH(<i>expression</i>)</td><td>Returns the hyperbolic cosine of a value</td></tr>
- *   <tr><td>TANH(<i>expression</i>)</td><td>Returns the hyperbolic tangens of a value</td></tr>
- *   <tr><td>RAD(<i>expression</i>)</td><td>Converts an angle measured in degrees to an approximately equivalent angle measured in radians</td></tr>
- *   <tr><td>DEG(<i>expression</i>)</td><td>Converts an angle measured in radians to an approximately equivalent angle measured in degrees</td></tr>
+ * <tr><th>Function<sup>*</sup></th><th>Description</th></tr>
+ * <tr><td>NOT(<i>expression</i>)</td><td>Boolean negation, 1 (means true) if the expression is not zero</td></tr>
+ * <tr><td>IF(<i>condition</i>,<i>value_if_true</i>,<i>value_if_false</i>)</td><td>Returns one value if the condition evaluates to true or the other if it evaluates to false</td></tr>
+ * <tr><td>RANDOM()</td><td>Produces a random number between 0 and 1</td></tr>
+ * <tr><td>MIN(<i>e1</i>,<i>e2</i>)</td><td>Returns the smaller of both expressions</td></tr>
+ * <tr><td>MAX(<i>e1</i>,<i>e2</i>)</td><td>Returns the bigger of both expressions</td></tr>
+ * <tr><td>ABS(<i>expression</i>)</td><td>Returns the absolute (non-negative) value of the expression</td></tr>
+ * <tr><td>ROUND(<i>expression</i>,precision)</td><td>Rounds a value to a certain number of digits, uses the current rounding mode</td></tr>
+ * <tr><td>FLOOR(<i>expression</i>)</td><td>Rounds the value down to the nearest integer</td></tr>
+ * <tr><td>CEILING(<i>expression</i>)</td><td>Rounds the value up to the nearest integer</td></tr>
+ * <tr><td>LOG(<i>expression</i>)</td><td>Returns the natural logarithm (base e) of an expression</td></tr>
+ * <tr><td>SQRT(<i>expression</i>)</td><td>Returns the square root of an expression</td></tr>
+ * <tr><td>SIN(<i>expression</i>)</td><td>Returns the trigonometric sine of an angle (in degrees)</td></tr>
+ * <tr><td>COS(<i>expression</i>)</td><td>Returns the trigonometric cosine of an angle (in degrees)</td></tr>
+ * <tr><td>TAN(<i>expression</i>)</td><td>Returns the trigonometric tangens of an angle (in degrees)</td></tr>
+ * <tr><td>SINH(<i>expression</i>)</td><td>Returns the hyperbolic sine of a value</td></tr>
+ * <tr><td>COSH(<i>expression</i>)</td><td>Returns the hyperbolic cosine of a value</td></tr>
+ * <tr><td>TANH(<i>expression</i>)</td><td>Returns the hyperbolic tangens of a value</td></tr>
+ * <tr><td>RAD(<i>expression</i>)</td><td>Converts an angle measured in degrees to an approximately equivalent angle measured in radians</td></tr>
+ * <tr><td>DEG(<i>expression</i>)</td><td>Converts an angle measured in radians to an approximately equivalent angle measured in degrees</td></tr>
  * </table>
  * *Functions names are case insensitive.
  * <br>
  * <h2>Supported Constants</h2>
  * <table>
- *   <tr><th>Constant</th><th>Description</th></tr>
- *   <tr><td>PI</td><td>The value of <i>PI</i>, exact to 100 digits</td></tr>
- *   <tr><td>TRUE</td><td>The value one</td></tr>
- *   <tr><td>FALSE</td><td>The value zero</td></tr>
+ * <tr><th>Constant</th><th>Description</th></tr>
+ * <tr><td>PI</td><td>The value of <i>PI</i>, exact to 100 digits</td></tr>
+ * <tr><td>TRUE</td><td>The value one</td></tr>
+ * <tr><td>FALSE</td><td>The value zero</td></tr>
  * </table>
- *
+ * <p>
  * <h2>Add Custom Operators</h2>
- *
+ * <p>
  * Custom operators can be added easily, simply create an instance of `Expression.Operator` and add it to the expression.
  * Parameters are the operator string, its precedence and if it is left associative. The operators `eval()` method will be called with the BigDecimal values of the operands.
  * All existing operators can also be overridden.
  * <br>
  * For example, add an operator `x >> n`, that moves the decimal point of _x_ _n_ digits to the right:
- *
+ * <p>
  * <pre>
  * Expression e = new Expression("2.1234 >> 2");
  *
@@ -162,7 +162,7 @@ import java.util.Stack;
  * </pre>
  * <br>
  * <h2>Add Custom Functions</h2>
- *
+ * <p>
  * Adding custom functions is as easy as adding custom operators. Create an instance of `Expression.Function`and add it to the expression.
  * Parameters are the function name and the count of required parameters. The functions `eval()` method will be called with a list of the BigDecimal parameters.
  * All existing functions can also be overridden.
@@ -189,7 +189,7 @@ import java.util.Stack;
  * <li>The SQRT() function implementation was taken from the book [The Java Programmers Guide To numerical Computing](http://www.amazon.de/Java-Number-Cruncher-Programmers-Numerical/dp/0130460419) (Ronald Mak, 2002)</li>
  * </ul>
  *
- *@author Udo Klimaschewski (http://about.me/udo.klimaschewski)
+ * @author Udo Klimaschewski (http://about.me/udo.klimaschewski)
  */
 public class Expression {
 
@@ -268,10 +268,8 @@ public class Expression {
 		/**
 		 * Creates a new function with given name and parameter count.
 		 *
-		 * @param name
-		 *            The name of the function.
-		 * @param numParams
-		 *            The number of parameters for this function.
+		 * @param name      The name of the function.
+		 * @param numParams The number of parameters for this function.
 		 */
 		public Function(String name, int numParams) {
 			this.name = name.toUpperCase();
@@ -289,11 +287,10 @@ public class Expression {
 		/**
 		 * Implementation for this function.
 		 *
-		 * @param parameters
-		 *            Parameters will be passed by the expression evaluator as a
-		 *            {@link List} of {@link BigDecimal} values.
+		 * @param parameters Parameters will be passed by the expression evaluator as a
+		 *                   {@link List} of {@link BigDecimal} values.
 		 * @return The function must return a new {@link BigDecimal} value as a
-		 *         computing result.
+		 * computing result.
 		 */
 		public abstract BigDecimal eval(List<BigDecimal> parameters);
 	}
@@ -319,13 +316,10 @@ public class Expression {
 		/**
 		 * Creates a new operator.
 		 *
-		 * @param oper
-		 *            The operator name (pattern).
-		 * @param precedence
-		 *            The operators precedence.
-		 * @param leftAssoc
-		 *            <code>true</code> if the operator is left associative,
-		 *            else <code>false</code>.
+		 * @param oper       The operator name (pattern).
+		 * @param precedence The operators precedence.
+		 * @param leftAssoc  <code>true</code> if the operator is left associative,
+		 *                   else <code>false</code>.
 		 */
 		public Operator(String oper, int precedence, boolean leftAssoc) {
 			this.oper = oper;
@@ -348,10 +342,8 @@ public class Expression {
 		/**
 		 * Implementation for this operator.
 		 *
-		 * @param v1
-		 *            Operand 1.
-		 * @param v2
-		 *            Operand 2.
+		 * @param v1 Operand 1.
+		 * @param v2 Operand 2.
 		 * @return The result of the operation.
 		 */
 		public abstract BigDecimal eval(BigDecimal v1, BigDecimal v2);
@@ -379,8 +371,7 @@ public class Expression {
 		/**
 		 * Creates a new tokenizer for an expression.
 		 *
-		 * @param input
-		 *            The expression string.
+		 * @param input The expression string.
 		 */
 		public Tokenizer(String input) {
 			this.input = input;
@@ -465,9 +456,8 @@ public class Expression {
 	/**
 	 * Creates a new expression instance from an expression string.
 	 *
-	 * @param expression
-	 *            The expression. E.g. <code>"2.4*sin(3)/(2-4)"</code> or
-	 *            <code>"sin(y)>0 & max(z, 3)>3"</code>
+	 * @param expression The expression. E.g. <code>"2.4*sin(3)/(2-4)"</code> or
+	 *                   <code>"sin(y)>0 & max(z, 3)>3"</code>
 	 */
 	public Expression(String expression) {
 		this.expression = expression;
@@ -516,7 +506,6 @@ public class Expression {
 				BigDecimal intPow = v1.pow(n2IntPart.intValueExact(), mc);
 				BigDecimal doublePow = new BigDecimal(Math.pow(dn1,
 						remainderOf2.doubleValue()));
-
 				BigDecimal result = intPow.multiply(doublePow, mc);
 				if (signOf2 == -1) {
 					result = BigDecimal.ONE.divide(result, mc.getPrecision(),
@@ -533,7 +522,6 @@ public class Expression {
 				return b1 && b2 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator("||", 2, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
@@ -542,21 +530,18 @@ public class Expression {
 				return b1 || b2 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator(">", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) == 1 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator(">=", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) >= 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator("<", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
@@ -564,14 +549,12 @@ public class Expression {
 						: BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator("<=", 10, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
 				return v1.compareTo(v2) <= 0 ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addOperator(new Operator("=", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
@@ -584,7 +567,6 @@ public class Expression {
 				return operators.get("=").eval(v1, v2);
 			}
 		});
-
 		addOperator(new Operator("!=", 7, false) {
 			@Override
 			public BigDecimal eval(BigDecimal v1, BigDecimal v2) {
@@ -597,7 +579,6 @@ public class Expression {
 				return operators.get("!=").eval(v1, v2);
 			}
 		});
-
 		addFunction(new Function("NOT", 1) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
@@ -605,7 +586,6 @@ public class Expression {
 				return zero ? BigDecimal.ONE : BigDecimal.ZERO;
 			}
 		});
-
 		addFunction(new Function("IF", 3) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
@@ -613,7 +593,6 @@ public class Expression {
 				return isTrue ? parameters.get(1) : parameters.get(2);
 			}
 		});
-
 		addFunction(new Function("RANDOM", 0) {
 			@Override
 			public BigDecimal eval(List<BigDecimal> parameters) {
@@ -748,22 +727,18 @@ public class Expression {
 				}
 				BigInteger n = x.movePointRight(mc.getPrecision() << 1)
 						.toBigInteger();
-
 				int bits = (n.bitLength() + 1) >> 1;
 				BigInteger ix = n.shiftRight(bits);
 				BigInteger ixPrev;
-
 				do {
 					ixPrev = ix;
 					ix = ix.add(n.divide(ix)).shiftRight(1);
 					// Give other threads a chance to work;
 					Thread.yield();
 				} while (ix.compareTo(ixPrev) != 0);
-
 				return new BigDecimal(ix, mc.getPrecision());
 			}
 		});
-
 		variables.put("PI", PI);
 		variables.put("TRUE", BigDecimal.ONE);
 		variables.put("FALSE", BigDecimal.ZERO);
@@ -773,8 +748,7 @@ public class Expression {
 	/**
 	 * Is the string a number?
 	 *
-	 * @param st
-	 *            The string.
+	 * @param st The string.
 	 * @return <code>true</code>, if the input string is a number.
 	 */
 	private boolean isNumber(String st) {
@@ -792,17 +766,14 @@ public class Expression {
 	 * Implementation of the <i>Shunting Yard</i> algorithm to transform an
 	 * infix expression to a RPN expression.
 	 *
-	 * @param expression
-	 *            The input expression in infx.
+	 * @param expression The input expression in infx.
 	 * @return A RPN representation of the expression, with each token as a list
-	 *         member.
+	 * member.
 	 */
 	private List<String> shuntingYard(String expression) {
 		List<String> outputQueue = new ArrayList<String>();
 		Stack<String> stack = new Stack<String>();
-
 		Tokenizer tokenizer = new Tokenizer(expression);
-
 		String lastFunction = null;
 		while (tokenizer.hasNext()) {
 			String token = tokenizer.next();
@@ -871,9 +842,7 @@ public class Expression {
 	 * @return The result of the expression.
 	 */
 	public BigDecimal eval() {
-
 		Stack<BigDecimal> stack = new Stack<BigDecimal>();
-
 		for (String token : getRPN()) {
 			if (operators.containsKey(token)) {
 				BigDecimal v1 = stack.pop();
@@ -886,7 +855,7 @@ public class Expression {
 				ArrayList<BigDecimal> p = new ArrayList<BigDecimal>(
 						f.getNumParams());
 				for (int i = 0; i < f.numParams; i++) {
-					p.add(0,stack.pop());
+					p.add(0, stack.pop());
 				}
 				BigDecimal fResult = f.eval(p);
 				stack.push(fResult);
@@ -900,9 +869,7 @@ public class Expression {
 	/**
 	 * Sets the precision for expression evaluation.
 	 *
-	 * @param precision
-	 *            The new precision.
-	 *
+	 * @param precision The new precision.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setPrecision(int precision) {
@@ -913,8 +880,7 @@ public class Expression {
 	/**
 	 * Sets the rounding mode for expression evaluation.
 	 *
-	 * @param roundingMode
-	 *            The new rounding mode.
+	 * @param roundingMode The new rounding mode.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setRoundingMode(RoundingMode roundingMode) {
@@ -925,10 +891,9 @@ public class Expression {
 	/**
 	 * Adds an operator to the list of supported operators.
 	 *
-	 * @param operator
-	 *            The operator to add.
+	 * @param operator The operator to add.
 	 * @return The previous operator with that name, or <code>null</code> if
-	 *         there was none.
+	 * there was none.
 	 */
 	public Operator addOperator(Operator operator) {
 		return operators.put(operator.getOper(), operator);
@@ -937,10 +902,9 @@ public class Expression {
 	/**
 	 * Adds a function to the list of supported functions
 	 *
-	 * @param function
-	 *            The function to add.
+	 * @param function The function to add.
 	 * @return The previous operator with that name, or <code>null</code> if
-	 *         there was none.
+	 * there was none.
 	 */
 	public Function addFunction(Function function) {
 		return functions.put(function.getName(), function);
@@ -949,10 +913,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable name.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable name.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setVariable(String variable, BigDecimal value) {
@@ -963,10 +925,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable to set.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable to set.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression setVariable(String variable, String value) {
@@ -982,10 +942,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable to set.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable to set.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression with(String variable, BigDecimal value) {
@@ -995,10 +953,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable to set.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable to set.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression and(String variable, String value) {
@@ -1008,10 +964,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable to set.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable to set.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression and(String variable, BigDecimal value) {
@@ -1021,10 +975,8 @@ public class Expression {
 	/**
 	 * Sets a variable value.
 	 *
-	 * @param variable
-	 *            The variable to set.
-	 * @param value
-	 *            The variable value.
+	 * @param variable The variable to set.
+	 * @param value    The variable value.
 	 * @return The expression, allows to chain methods.
 	 */
 	public Expression with(String variable, String value) {

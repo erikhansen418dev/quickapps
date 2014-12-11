@@ -1,74 +1,70 @@
 package com.yoavst.quickapps.desktop;
 
 import android.app.Fragment;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.text.Html;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
-import android.util.TypedValue;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.devspark.robototextview.widget.RobotoTextView;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
-import com.yoavst.quickapps.FloatingActionButton;
+import com.malinskiy.materialicons.IconDrawable;
+import com.malinskiy.materialicons.Iconify;
+import com.mikepenz.aboutlibraries.Libs;
+import com.yoavst.quickapps.AboutLibsView;
 import com.yoavst.quickapps.R;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.ColorRes;
-
 import java.util.Locale;
+
+import at.markushi.ui.CircleButton;
 
 /**
  * Created by Yoav.
  */
-@EFragment(R.layout.desktop_source_fragment)
 public class SourceFragment extends Fragment {
-	@ColorRes(R.color.material_blue)
+	TextView sourceText;
+	AboutLibsView aboutLibsView;
+	CircleButton circularButton;
 	int blueColor;
-	@ColorRes(R.color.material_light_blue)
-	int blueLightColor;
-	@ViewById(R.id.github_button)
-	FloatingActionButton mGithubButton;
-	@ViewById(R.id.text)
-	RobotoTextView mText;
-	@ViewById(R.id.credits)
-	RobotoTextView mCredits;
 
-	@AfterViews
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View layout = inflater.inflate(R.layout.desktop_fragment_source, container, false);
+		sourceText = (TextView) layout.findViewById(R.id.source_text);
+		aboutLibsView = (AboutLibsView) layout.findViewById(R.id.aboutLibs);
+		circularButton = (CircleButton) layout.findViewById(R.id.github);
+		blueColor = getResources().getColor(R.color.primary_color);
+		init();
+		return layout;
+	}
+
 	void init() {
-		mCredits.setText(Html.fromHtml(getString(R.string.credits)));
-		mCredits.setMovementMethod(new LinkMovementMethod());
 		if (Locale.getDefault().getLanguage().startsWith("en")) {
 			final SpannableString text1 = new SpannableString(getString(R.string.source_description));
 			colorize(setBigger(text1, 1.5f, 15, 32), blueColor, 15, 32);
 			colorize(setBigger(text1, 1.5f, 46, 52), blueColor, 46, 52);
 			colorize(setBigger(text1, 1.5f, 67, 73), blueColor, 67, 73);
-			mText.setText(text1);
-		}
-		mGithubButton.setColor(blueLightColor);
-		mGithubButton.setDrawable(getResources().getDrawable(R.drawable.ic_action_github_fab));
-	}
+			sourceText.setText(text1);
 
-	@Click(R.id.github_button)
-	void onFloatingClicked() {
-		getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/yoavst/quickapps")));
+		}
+		circularButton.setImageDrawable(new IconDrawable(getActivity(), Iconify.IconValue.md_public).sizeDp(32).color(Color.WHITE));
+		circularButton.setOnClickListener(v -> getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/yoavst/quickapps"))));
+		Bundle bundle = new Bundle();
+		bundle.putBoolean(Libs.BUNDLE_VERSION, true);
+		bundle.putBoolean(Libs.BUNDLE_LICENSE, true);
+		bundle.putBoolean(Libs.BUNDLE_AUTODETECT,false);
+		bundle.putStringArray(Libs.BUNDLE_FIELDS, Libs.toStringArray(R.string.class.getFields()));
+		bundle.putStringArray(Libs.BUNDLE_LIBS, getResources().getStringArray(R.array.credits));
+		aboutLibsView.configureLibraries(bundle);
+
 	}
 
 	private SpannableString setBigger(SpannableString string, float size, int start, int end) {
@@ -79,12 +75,6 @@ public class SourceFragment extends Fragment {
 
 	private SpannableString colorize(SpannableString string, int color, int start, int end) {
 		string.setSpan(new ForegroundColorSpan(color), start,
-				end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		return string;
-	}
-
-	private SpannableString bold(SpannableString string, int start, int end) {
-		string.setSpan(new StyleSpan(Typeface.BOLD), start,
 				end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return string;
 	}

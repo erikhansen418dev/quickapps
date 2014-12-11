@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_materialnavigationdrawer"></string>
+	<!-- Author section -->
+	<string name="library_materialnavigationdrawer_author">Fabio Biola</string>
+	<string name="library_materialnavigationdrawer_authorWebsite">https://github.com/neokree</string>
+	<!-- Library section -->
+	<string name="library_materialnavigationdrawer_libraryName">MaterialNavigationDrawer </string>
+	<string name="library_materialnavigationdrawer_libraryDescription">Navigation Drawer Activity with material design style and simplified methods</string>
+	<string name="library_materialnavigationdrawer_libraryWebsite">https://github.com/neokree/MaterialNavigationDrawer/wiki</string>
+	<string name="library_materialnavigationdrawer_libraryVersion">1.1</string>
+	<!-- OpenSource section -->
+	<string name="library_materialnavigationdrawer_isOpenSource">true</string>
+	<string name="library_materialnavigationdrawer_repositoryLink">https://github.com/neokree/MaterialNavigationDrawer</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_materialnavigationdrawer_classPath">it.neokree.materialnavigationdrawer</string>
+	<!-- License section -->
+	<string name="library_materialnavigationdrawer_licenseId">apache_2_0</string>
+	<!-- Custom variables section -->
+</resources>

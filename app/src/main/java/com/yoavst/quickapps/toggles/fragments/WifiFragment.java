@@ -9,11 +9,13 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.provider.Settings;
 
 import com.yoavst.quickapps.R;
+import com.yoavst.quickapps.toggles.CTogglesActivity;
+import com.yoavst.quickapps.toggles.Connectivity;
 import com.yoavst.quickapps.toggles.ToggleFragment;
-import com.yoavst.quickapps.toggles.TogglesActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -52,7 +54,7 @@ public class WifiFragment extends ToggleFragment {
 	@AfterViews
 	void init() {
 		mToggleTitle.setText(WIFI);
-		mSystemUiResources = ((TogglesActivity) getActivity()).getSystemUiResource();
+		mSystemUiResources = ((CTogglesActivity) getActivity()).getSystemUiResource();
 		if (wifiOnIcon == -1 || wifiOffIcon == -1) {
 			wifiOffIcon = mSystemUiResources.getIdentifier("indi_noti_wifi_off", "drawable", "com.android.systemui");
 			wifiOnIcon = mSystemUiResources.getIdentifier("indi_noti_wifi_on", "drawable", "com.android.systemui");
@@ -124,10 +126,18 @@ public class WifiFragment extends ToggleFragment {
 			mToggleIcon.setImageDrawable(mSystemUiResources.getDrawable(wifiOffIcon));
 			mToggleText.setText(WIFI_TURN_OFF);
 		} else {
-			mWifiManager.setWifiEnabled(true);
+			if (Connectivity.isApOn(getActivity())) {
+				Connectivity.configApState(getActivity());
+				new Handler().postDelayed(this::toggleOn, 400);
+			} else toggleOn();
 			mToggleIcon.setImageDrawable(mSystemUiResources.getDrawable(wifiOnIcon));
 			mToggleText.setText(WIFI_TURN_ON);
 		}
+	}
+
+	private void toggleOn() {
+		mWifiManager.setWifiEnabled(true);
+
 	}
 
 	@Override

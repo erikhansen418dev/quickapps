@@ -24,28 +24,20 @@
     </string-array>
     <string name="client_id" translatable="false">quickcircle</string>
     <string name="client_secret" translatable="false">FE01Q2TWD53ZCAQ5MQNVX8NOU1XI</string>
-    <array name="drawer_secondary_icons">
-        <item>@drawable/ic_action_help</item>
-        <item>@drawable/ic_action_about</item>
-    </array>
-
-      <string name="credits" translatable="false">
-        <![CDATA[
-&#8226;LG for their Quick Circle and QSlide SDKs.<br>
-&#8226;Excilys team for <a href="https://github.com/excilys/androidannotations/wiki">Android annotations</a> that made my life a lot easier.<br>
-&#8226;Joan Zapata for <a href="https://github.com/JoanZapata/android-iconify">android-iconify</a>.<br>
-&#8226;Google for Android, Support V4, V13 packages, GSON and LibPhoneNumber.<br>
-&#8226;Jake Wharton for <a href="http://viewpagerindicator.com/">viewpagerindicator</a>.<br>
-&#8226;Pablo Fernandez For <a href="https://github.com/fernandezpablo85/scribe-java">Scribe-java</a>.<br>
-&#8226;<a href="http://www.blackbearblanc.dk/">Jeppe Foldager</a> for its wonderful icons.<br>
-&#8226;Miras Absar for <a href="https://github.com/mirasmithy/airy">Airy</a>.<br>
-&#8226;Udo Klimaschewski For <a href="https://github.com/uklimaschewski/EvalEx">EvalEx</a>.<br>
-&#8226;Evgeny Shishkin for <a href="https://github.com/johnkil/Android-RobotoTextView">RobotoTextView</a>.<br>
-&#8226;Jeff Gilfelt for <a href="https://github.com/jgilfelt/SystemBarTint">SystemBarTint</a>.<br>
-&#8226;Faiz Malkani for <a href="https://github.com/FaizMalkani/FloatingActionButton">FloatingActionButton</a>.<br>
-&#8226;Vince Mi for <a href="https://github.com/vinc3m1/RoundedImageView">RoundedImageView</a>.<br>
-        ]]>
-    </string>
+    <string-array name="credits" translatable="false">
+        <item>qcircledesigntemplate</item>
+        <item>QSlide</item>
+        <item>materialnavigationdrawer</item>
+        <item>Gson</item>
+        <item>libPhoneNumber</item>
+        <item>AndroidAnnotations</item>
+        <item>MaterialIcons</item>
+        <item>RoundedImageView</item>
+        <item>CircleButton</item>
+        <item>ViewPagerIndicator</item>
+        <item>AndroidAnimations</item>
+        <item>AboutLibraries</item>
+    </string-array>
     <string name="quick" translatable="false">Quick</string>
     <string-array name="modules">
         <item>Torch</item>
@@ -62,7 +54,7 @@
         <item>8 Ball</item>
     </string-array>
     <string-array name="launcher_blacklist">
-        <item>com.yoavst.quickapps.launcher.LauncherActivity_</item>
+        <item>com.yoavst.quickapps.launcher.CLauncherActivity</item>
     </string-array>
     <string name="asterisk" translatatable="false">*</string>
     <string name="number_sign" translatatable="false">#</string>
