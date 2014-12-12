@@ -131,6 +131,10 @@
     <string name="music_module_name_service_lollipop">Quick Music for Lollipop 5.0</string>
     <string name="music_module_name_service">Quick Music for KitKat</string>
     <string name="orientation">Check for vertical launcher</string>
+    <string name="game_over">Game Over</string>
+    <string name="start_game">Starting game</string>
+    <string name="round">round %1$d</string>
+    <string name="your_score">Your score is %1$d</string>
     <string-array name="magic_ball">
         <item>It is certain</item>
         <item>It is decidedly so</item>

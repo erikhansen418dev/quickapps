@@ -346,6 +346,22 @@
 
         <activity android:name=".news.LoginActivity_" />
         <!-- News part [END] -->
+        <!-- Simon part [START] -->
+        <activity
+            android:name=".simon.CSimonActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:label="@string/simon_module_name"
+            android:launchMode="singleInstance"
+            android:icon="@drawable/simon_icon"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.yoavst.quickapps.news"
+            android:theme="@style/darkTheme">
+            <intent-filter>
+                <action android:name="com.lge.quickcover" />
+            </intent-filter>
+        </activity>
+        <!-- Simon part [END] -->
         <!-- Desktop part [START] -->
         <activity
             android:name=".desktop.MainActivity"
@@ -357,6 +373,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <!-- Desktop part [END] -->

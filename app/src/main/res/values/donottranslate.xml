@@ -14,6 +14,7 @@
     <string name="calculator_module_name" translatable="false">Quick Calculator</string>
     <string name="dialer_module_name" translatable="false">Quick Dialer</string>
     <string name="ball_module_name" translatable="false">Quick 8 Ball</string>
+    <string name="simon_module_name" translatable="false">Quick Simon</string>
     <string-array name="toggles">
         <item>@string/wifi</item>
         <item>@string/data_data</item>

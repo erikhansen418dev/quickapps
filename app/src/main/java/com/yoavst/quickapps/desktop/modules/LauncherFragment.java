@@ -61,7 +61,7 @@ public class LauncherFragment extends BaseModuleFragment {
 
 	@Override
 	int[] getIdsForCheckboxes() {
-		return new int[]{R.id.load_externalg_checkbox,R.id.auto_load_checkbox,R.id.remove_lg_checkbox,R.id.orientation_switch};
+		return new int[]{R.id.auto_load_checkbox,R.id.load_externalg_checkbox,R.id.remove_lg_checkbox,R.id.orientation_switch};
 	}
 
 	@Override
