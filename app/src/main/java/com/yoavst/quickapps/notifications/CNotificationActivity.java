@@ -109,18 +109,22 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 
 	protected void onNotificationRemovedUi(StatusBarNotification statusBarNotification) {
 		runOnUiThread(() -> {
-			NotificationsManager.removeNotification(statusBarNotification);
-			updateAdapter();
-			if (NotificationsManager.getCount() == 0) {
-				showEmpty();
+			if (!isDestroyed()) {
+				NotificationsManager.removeNotification(statusBarNotification);
+				updateAdapter();
+				if (NotificationsManager.getCount() == 0) {
+					showEmpty();
+				}
 			}
 		});
 	}
 
 	void updateAdapter() {
 		runOnUiThread(() -> {
-			pager.getAdapter().notifyDataSetChanged();
-			indicator.notifyDataSetChanged();
+			if (!isDestroyed()) {
+				pager.getAdapter().notifyDataSetChanged();
+				indicator.notifyDataSetChanged();
+			}
 		});
 	}
 

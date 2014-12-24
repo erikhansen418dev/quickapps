@@ -77,3 +77,5 @@ proguard/
 *.log
 
 
+# paid modules
+QLock/

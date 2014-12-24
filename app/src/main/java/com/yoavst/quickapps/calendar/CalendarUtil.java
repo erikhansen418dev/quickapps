@@ -184,7 +184,7 @@ public class CalendarUtil {
 				selection,
 				new String[]{Integer.toString(id)},
 				null);
-		if (cursor.moveToFirst()) {
+		if (cursor != null && cursor.moveToFirst()) {
 			do {
 				events.add(new Event(id, title, cursor.getLong(1) - (isAllDay ? timezone.getOffset(startDate) : 0),
 						cursor.getLong(2) - (isAllDay ? timezone.getOffset(startDate) : 0), location, isAllDay).setColor(color));

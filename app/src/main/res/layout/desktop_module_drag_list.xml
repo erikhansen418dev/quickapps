@@ -15,6 +15,7 @@
     android:padding="3dp"
     android:layout_margin="3dp"
     android:dividerHeight="2dp"
+    dslv:drag_handle_id="@+id/drag_handle"
     dslv:drag_enabled="true"
     dslv:remove_enabled="false"
     dslv:collapsed_height="2dp"

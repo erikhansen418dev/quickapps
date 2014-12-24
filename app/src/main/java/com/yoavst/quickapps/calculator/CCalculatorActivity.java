@@ -212,7 +212,7 @@ public class CCalculatorActivity extends QCircleActivity {
 				}
 				answer.setText(text);
 			} catch (RuntimeException e) {
-				if (e.getMessage().toLowerCase().contains("division by zero")) {
+				if (e.getMessage() != null && e.getMessage().toLowerCase().contains("division by zero")) {
 					answer.setText(INFINITY);
 				} else answer.setText(ERROR);
 				e.printStackTrace();

@@ -37,7 +37,7 @@ public class ModulesFragment extends Fragment implements ViewPager.OnPageChangeL
 	LinearLayout circleLayout;
 	ViewPager pager;
 	CirclePageIndicator indicator;
-	int[] colors;
+	static int[] colors;
 
 	//region Bugfix for Android
 	private static final Field sChildFragmentManagerField;
@@ -101,9 +101,11 @@ public class ModulesFragment extends Fragment implements ViewPager.OnPageChangeL
 		title.setText(pager.getAdapter().getPageTitle(position));
 		((GradientDrawable) circleLayout.getBackground())
 				.setColor(colors[position]);
-		((MaterialNavigationDrawer) getActivity()).getToolbar().setBackgroundColor(colors[position]);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-			getActivity().getWindow().setStatusBarColor(colors[position]);
+		if (getActivity() != null) {
+			((MaterialNavigationDrawer) getActivity()).getToolbar().setBackgroundColor(colors[position]);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+				getActivity().getWindow().setStatusBarColor(colors[position]);
+		}
 	}
 
 	@Override

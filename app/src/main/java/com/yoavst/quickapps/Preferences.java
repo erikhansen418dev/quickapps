@@ -48,6 +48,9 @@ public interface Preferences {
 	@DefaultBoolean(false)
 	boolean amPmInCalendar();
 
+	@DefaultBoolean(false)
+	boolean g2Mode();
+
 	@DefaultInt(0)
 	int highScoreInSimon();
 

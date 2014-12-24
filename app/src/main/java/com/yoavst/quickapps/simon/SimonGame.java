@@ -17,7 +17,7 @@ public class SimonGame {
 		Red, Blue, Green, Yellow;
 
 		public static Color generate() {
-			return generateFrom(random.nextInt(3));
+			return generateFrom(random.nextInt(4));
 		}
 
 		public static Color generateFrom(int num) {

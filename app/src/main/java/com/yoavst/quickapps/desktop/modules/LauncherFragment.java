@@ -91,6 +91,7 @@ public class LauncherFragment extends BaseModuleFragment {
 			mItems = CLauncherActivity.getIconsFromPrefs(getActivity());
 		else
 			mItems = CLauncherActivity.initDefaultIcons(getActivity());
+		sortItems();
 		view.findViewById(R.id.modules_order_row).setOnClickListener(v -> onOpenSettingsClicked());
 	}
 

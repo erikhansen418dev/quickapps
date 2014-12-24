@@ -101,8 +101,6 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 		boolean isVertical = prefs.launcherIsVertical().get();
 		if (items.size() < 5) {
 			isVertical = true;
-			View backBtn = findViewById(R.id.quick_circle_back_btn);
-			backBtn.setPadding(0, 0, 0, backBtn.getPaddingBottom());
 		}
 		getFragmentManager().beginTransaction().replace(TemplateTag.CONTENT_MAIN, isVertical ? new VerticalFragment() : new HorizontalFragment()).commit();
 	}
