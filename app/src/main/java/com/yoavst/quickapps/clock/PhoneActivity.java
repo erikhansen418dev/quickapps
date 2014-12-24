@@ -130,12 +130,27 @@ public class PhoneActivity extends FloatableActivity {
 			// Updating the UI
 			int num = (int) (millis % 1000 / 10);
 			if (showMillis)
-				time.setText(Html.fromHtml(MessageFormat.format(TIME_FORMATTING, format((int) TimeUnit.MILLISECONDS.toHours(millis)),
-						format((int) TimeUnit.MILLISECONDS.toMinutes(millis)), format((int) TimeUnit.MILLISECONDS.toSeconds(millis)), format(num))));
+				time.setText(Html.fromHtml(MessageFormat.format(TIME_FORMATTING, format(getFromMilli(millis, TimeUnit.HOURS)),
+						format(getFromMilli(millis, TimeUnit.MINUTES)), format(getFromMilli(millis, TimeUnit.SECONDS)), format(num))));
 			else
-				time.setText(Html.fromHtml(MessageFormat.format(TIME_FORMATTING_NO_MILLIS, format((int) TimeUnit.MILLISECONDS.toHours(millis)),
-						format((int) TimeUnit.MILLISECONDS.toMinutes(millis)), format((int) TimeUnit.MILLISECONDS.toSeconds(millis)))));
+				time.setText(Html.fromHtml(MessageFormat.format(TIME_FORMATTING_NO_MILLIS, format(getFromMilli(millis, TimeUnit.HOURS)),
+						format(getFromMilli(millis, TimeUnit.MINUTES)), format(getFromMilli(millis, TimeUnit.SECONDS)))));
+
 		});
+	}
+	public static int getFromMilli(long millis, TimeUnit timeUnit) {
+		switch (timeUnit) {
+			case SECONDS:
+				// Number of seconds % 60
+				return (int) (millis / 1_000) % 60;
+			case MINUTES:
+				// Number of minutes % 60
+				return (int) (millis / 60_000) % 60;
+			case HOURS:
+				// Number of hours (can be more then 24)
+				return (int) (millis / 1_440_000);
+		}
+		return 0;
 	}
 
 	public static String format(int num) {

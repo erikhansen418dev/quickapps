@@ -4,14 +4,14 @@ apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.yoavst.quickapps"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 47
-        versionName "3.2"
+        versionCode 48
+        versionName "3.2.1"
         resConfigs "ar","ca","de","es","fi","fr","he","hu","it","iw","ko","nl","pl","pt","ru","tr"
         resConfigs "xhdpi", "xxhdpi", "xxxhdpi"
     }
