@@ -136,6 +136,8 @@
     <string name="start_game">Запуск игры</string>
     <string name="round">раунд %1$d</string>
     <string name="your_score">Ваш счёт %1$d</string>
+    <string name="g2_mode">Режим G2</string>
+    <string name="g3_mode">Режим G3</string>
     <string-array name="magic_ball">
         <item>Это однозначно</item>
         <item>Определённо так</item>
