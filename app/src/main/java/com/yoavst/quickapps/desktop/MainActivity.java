@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Pair;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -15,6 +16,7 @@ import com.malinskiy.materialicons.IconDrawable;
 import com.malinskiy.materialicons.Iconify;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
+import com.yoavst.quickapps.launcher.CLauncherActivity;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.MaterialSection;
@@ -28,6 +30,7 @@ public class MainActivity extends MaterialNavigationDrawer {
 	TextView modeText;
 	Pair<String, String> modes;
 	Preferences_ prefs;
+	boolean isSettingsEnabled;
 
 	@Override
 	public int defaultItem() {
@@ -47,6 +50,31 @@ public class MainActivity extends MaterialNavigationDrawer {
 	public void init(Bundle bundle) {
 		primaryColor = getResources().getColor(R.color.primary_color);
 		primaryColorDark = getResources().getColor(R.color.primary_color_dark);
+		Button settingsHandler = (Button) findViewById(R.id.settings_remover);
+		isSettingsEnabled = CLauncherActivity.hasSettings(this);
+		settingsHandler.setText(isSettingsEnabled ? R.string.hide_settings_from_quick_circle : R.string.show_settings_from_quick_circle);
+		settingsHandler.setOnClickListener(v -> {
+			try {
+				if (isSettingsEnabled) {
+					if (CLauncherActivity.removeSettings(this)) {
+						Toast.makeText(this, "Removed successfully, reboot in order to update", Toast.LENGTH_SHORT).show();
+						isSettingsEnabled = false;
+						settingsHandler.setText(R.string.show_settings_from_quick_circle);
+
+					}
+				} else {
+					if (CLauncherActivity.addSettings(this)) {
+						Toast.makeText(this, "Added successfully, reboot in order to update", Toast.LENGTH_SHORT).show();
+						isSettingsEnabled = true;
+						settingsHandler.setText(R.string.hide_settings_from_quick_circle);
+					} else {
+						Toast.makeText(this, "Fail to add settings", Toast.LENGTH_SHORT).show();
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		AdView adView = (AdView) findViewById(R.id.adView);
 		adView.setAdListener(new AdListener() {
 			@Override

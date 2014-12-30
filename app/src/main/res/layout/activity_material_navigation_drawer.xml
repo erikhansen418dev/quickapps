@@ -189,8 +189,24 @@
             android:id="@+id/bottom_sections"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/mode_layout"
+            android:layout_above="@+id/settings_layout"
             android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/settings_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mode_layout"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/settings_remover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/hide_settings_from_quick_circle" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/mode_layout"
@@ -203,8 +219,8 @@
                 android:id="@+id/g2_mode_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:checked="true" />
 
             <TextView

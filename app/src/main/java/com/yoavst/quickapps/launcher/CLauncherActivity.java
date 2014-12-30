@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -35,7 +36,6 @@ import com.makeramen.RoundedImageView;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
-
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -118,7 +118,16 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 			} while (cursor.moveToNext());
 		}
 	}
-
+	public static boolean hasSettings(Context context) {
+			updateComponents(context);
+			int settings = -1;
+			for (ComponentWrapper wrapper : components) {
+				if (wrapper.getComponent().getPackageName().equals("com.lge.clock")) {
+					settings = wrapper.getId();
+				}
+			}
+		return settings != -1;
+	}
 	public static boolean removeSettings(Context context) {
 		updateComponents(context);
 		Uri uri = Uri.parse("content://com.lge.lockscreensettings/quickwindow");
@@ -131,6 +140,36 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 		if (settings != -1) {
 			int rows = context.getContentResolver().delete(ContentUris.withAppendedId(uri, settings), null, null);
 			return rows > 0;
+		} else return false;
+	}
+
+	public static boolean addSettings(Context context) {
+		updateComponents(context);
+		Uri uri = Uri.parse("content://com.lge.lockscreensettings/quickwindow");
+		if (components.length < 6) {
+			int settings = -1;
+			boolean[] values = {false, false, false, false, false, false};
+			for (ComponentWrapper wrapper : components) {
+				if (wrapper.getComponent().getPackageName().equals("com.lge.clock")) {
+					settings = wrapper.getId();
+				}
+				values[wrapper.getId() - 1] = true;
+			}
+			if (settings == -1) {
+				int missingId = -1;
+				for (int i = 0; i < values.length; i++) {
+					if (!values[i]) {
+						missingId = i + 1;
+						break;
+					}
+				}
+				ContentValues newValues = new ContentValues();
+				newValues.put("_id", missingId);
+				newValues.put("package", "com.lge.clock");
+				newValues.put("class", "com.lge.clock.quickcover.QuickCoverSettingActivity");
+				context.getContentResolver().insert(uri, newValues);
+				return true;
+			} else return false;
 		} else return false;
 	}
 

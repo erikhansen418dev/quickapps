@@ -203,6 +203,7 @@
             android:name=".music.RemoteControlService"
             android:icon="@drawable/music_launcher"
             android:label="@string/music_module_name_service"
+            android:enabled="@bool/is_pre_lollipop"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:taskAffinity="com.yoavst.quickapps.music">
             <intent-filter>
@@ -213,6 +214,7 @@
         <service
             android:name=".music.RemoteControlServiceLollipop"
             android:icon="@drawable/music_launcher"
+            android:enabled="@bool/is_lollipop"
             android:label="@string/music_module_name_service_lollipop"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
             android:taskAffinity="com.yoavst.quickapps.music">
