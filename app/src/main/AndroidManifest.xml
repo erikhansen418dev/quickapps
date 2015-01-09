@@ -360,13 +360,29 @@
             android:launchMode="singleInstance"
             android:icon="@drawable/simon_icon"
             android:screenOrientation="portrait"
-            android:taskAffinity="com.yoavst.quickapps.news"
+            android:taskAffinity="com.yoavst.quickapps.simon"
             android:theme="@style/darkTheme">
             <intent-filter>
                 <action android:name="com.lge.quickcover" />
             </intent-filter>
         </activity>
         <!-- Simon part [END] -->
+        <!-- Recorder part [START] -->
+        <activity
+            android:name=".recorder.CRecorderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:label="@string/recorder_module_name"
+            android:launchMode="singleInstance"
+            android:icon="@drawable/recorder_icon"
+            android:screenOrientation="portrait"
+            android:taskAffinity="com.yoavst.quickapps.recorder"
+            android:theme="@style/darkTheme">
+            <intent-filter>
+                <action android:name="com.lge.quickcover" />
+            </intent-filter>
+        </activity>
+        <!-- Recorder part [END] -->
         <!-- Desktop part [START] -->
         <activity
             android:name=".desktop.MainActivity"

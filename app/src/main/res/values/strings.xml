@@ -139,7 +139,11 @@
     <string name="g3_mode">G3 mode</string>
     <string name="show_settings_from_quick_circle">Show settings on Quick Circle</string>
     <string name="auto_launch_title">Auto launch on notification</string>
-    <string name="auto_launch_subtitle">The module will be opned automatically if on quick circle case and received notification</string>
+    <string name="auto_launch_subtitle">The module will be opened automatically if on quick circle case and received notification</string>
+    <string name="start_record">Start recording</string>
+    <string name="voice_recorded">Voice recorded</string>
+    <string name="successfully_record_audio">Successfully recorded audio. The file is saved on VoiceRecorder folder on sdcard.</string>
+    <string name="delete_record">Record was deleted</string>
     <string-array name="magic_ball">
         <item>It is certain</item>
         <item>It is decidedly so</item>

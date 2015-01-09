@@ -21,11 +21,15 @@ public class NotificationService extends NotificationListenerService {
 	private final IBinder mBinder = new LocalBinder();
 	private Callback callback;
 	public static final String NOTIFICATION_ACTION = "notification_action";
+	private static final String[] IGNORED_POP_PACKAGES = new String[]{"com.android.incallui"};
 
 	@Override
 	public void onNotificationPosted(StatusBarNotification sbn) {
 		if (callback != null) callback.onNotificationPosted(sbn);
-		else if (CoverReceiver.isCoverInUse() && new Preferences_(this).startActivityOnNotification().get()){
+		else if (CoverReceiver.isCoverInUse() && !CNotificationActivity.isOpenNow && new Preferences_(this).startActivityOnNotification().get()) {
+			for (String ignoredPopPackage : IGNORED_POP_PACKAGES) {
+				if (ignoredPopPackage.equals(sbn.getPackageName())) return;
+			}
 			startActivity(new Intent(this, CNotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 		}
 	}

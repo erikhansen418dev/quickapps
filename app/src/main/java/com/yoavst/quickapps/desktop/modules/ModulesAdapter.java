@@ -57,6 +57,10 @@ public class ModulesAdapter extends FragmentPagerAdapter {
 				break;
 			case 11:
 				fragment = new CompassFragment();
+				break;
+			case 12:
+				fragment = new RecorderFragment();
+				break;
 		}
 		return fragment;
 	}

@@ -31,6 +31,7 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 	NotificationService service;
 	boolean bound = false;
 	public boolean shouldRegister = false;
+	public static boolean isOpenNow = false;
 	ViewPager pager;
 	NotificationAdapter mAdapter;
 	TextView titleError;
@@ -42,6 +43,7 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		isOpenNow = true;
 		template = new QCircleTemplate(this);
 		template.setTitle(getString(R.string.notification_module_name), Color.WHITE, getResources().getColor(R.color.md_orange_A400));
 		template.setTitleTextSize(17);
@@ -218,6 +220,7 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 		unbindService(this);
 		service = null;
 		NotificationsManager.clean();
+		isOpenNow = false;
 		super.onDestroy();
 	}
 	//</editor-fold>
