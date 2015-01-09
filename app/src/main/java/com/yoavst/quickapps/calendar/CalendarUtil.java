@@ -56,6 +56,7 @@ public class CalendarUtil {
 	private static boolean useAmPm = false;
 
 	public static ArrayList<Event> getCalendarEvents(Context context) {
+		context = context.getApplicationContext();
 		CalendarResources.init(context);
 		useAmPm = new Preferences_(context).amPmInCalendar().get();
 		boolean showRepeating = new Preferences_(context).showRepeatingEvents().get();
@@ -167,6 +168,7 @@ public class CalendarUtil {
 	}
 
 	private static ArrayList<Event> getEventFromRepeating(Context context, long startDate, String location, int color, String title, int id, boolean isAllDay) {
+		context = context.getApplicationContext();
 		ArrayList<Event> events = new ArrayList<>();
 		final String[] INSTANCE_PROJECTION = new String[]{
 				CalendarContract.Instances.EVENT_ID,      // 0
@@ -330,6 +332,7 @@ public class CalendarUtil {
 		public static String moreThenAYearLeft;
 
 		public static void init(Context context) {
+			context = context.getApplicationContext();
 			if (today == null || moreThenAYearLeft == null) {
 				today = context.getString(R.string.today);
 				tomorrow = context.getString(R.string.tomorrow);

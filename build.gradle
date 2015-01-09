@@ -17,5 +17,8 @@ allprojects {
         maven {
             url 'https://raw.githubusercontent.com/Goddchen/mvn-repo/master/'
         }
+        maven {
+            url 'https://github.com/chemickypes/mvn-repo/raw/master/'
+        }
     }
 }

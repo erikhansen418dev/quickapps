@@ -95,7 +95,12 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 
 	protected void onNotificationPostedUi(StatusBarNotification statusBarNotification) {
 		runOnUiThread(() -> {
-			NotificationsManager.addNotification(statusBarNotification);
+			if (statusBarNotification.getPackageName().equals("com.whatsapp")) {
+				service.setActiveNotifications();
+				NotificationsManager.whatsapp();
+			} else {
+				NotificationsManager.addNotification(statusBarNotification);
+			}
 			updateAdapter();
 			hideError();
 			showContent();
@@ -209,6 +214,7 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 
 	@Override
 	public void onDestroy() {
+		service.setCallback(null, null);
 		unbindService(this);
 		service = null;
 		NotificationsManager.clean();

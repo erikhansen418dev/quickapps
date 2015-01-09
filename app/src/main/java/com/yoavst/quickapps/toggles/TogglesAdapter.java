@@ -3,13 +3,21 @@ package com.yoavst.quickapps.toggles;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Build;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yoavst.quickapps.Preferences_;
 import com.yoavst.quickapps.R;
-import com.yoavst.quickapps.toggles.fragments.*;
+import com.yoavst.quickapps.toggles.fragments.BatteryFragment_;
+import com.yoavst.quickapps.toggles.fragments.BluetoothFragment_;
+import com.yoavst.quickapps.toggles.fragments.BrightnessFragment_;
+import com.yoavst.quickapps.toggles.fragments.DataFragment_;
+import com.yoavst.quickapps.toggles.fragments.HotSpotFragment_;
+import com.yoavst.quickapps.toggles.fragments.SoundFragment_;
+import com.yoavst.quickapps.toggles.fragments.WifiFragment_;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +38,14 @@ public class TogglesAdapter extends FragmentPagerAdapter {
 		if (prefs.togglesItems().exists())
 			items = new Gson().fromJson(prefs.togglesItems().get(), listType);
 		else items = initDefaultToggles(context);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			for (int i = 0; i < items.size(); i++) {
+				if (items.get(i).id == 1) {
+					items.remove(i);
+					break;
+				}
+			}
+		}
 	}
 
 	@Override

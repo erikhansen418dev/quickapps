@@ -16,6 +16,9 @@ public class QCircleActivity extends Activity {
 		super.onStart();
 		View circle = findViewById(R.id.circle);
 		if (circle != null && new Preferences_(this).g2Mode().getOr(false)) circle.setVisibility(View.GONE);
+		try {
+			template.registerIntentReceiver();
+		} catch (Exception ignored) {}
 	}
 
 	@Override

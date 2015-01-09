@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.toggles;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -36,7 +37,7 @@ public class CTogglesActivity extends QCircleActivity {
 		template.setTitle(getString(R.string.toggles_module_name), Color.WHITE, getResources().getColor(R.color.md_indigo_700));
 		template.setTitleTextSize(17);
 		template.setFullscreenIntent(() -> ((ToggleFragment)
-				(getFragmentManager().findFragmentByTag("android:switcher:" + R.id.toggles_pager + ":" + pager.getCurrentItem()))).getIntentForLaunch());
+				(getFragmentManager().findFragmentByTag("android:switcher:" + R.id.toggles_pager + ":" + pager.getCurrentItem()))).getIntentForLaunch().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 		pager = new ViewPager(this);
 		pager.setId(R.id.toggles_pager);
 		pager.setAdapter(new TogglesAdapter(getFragmentManager(), this));

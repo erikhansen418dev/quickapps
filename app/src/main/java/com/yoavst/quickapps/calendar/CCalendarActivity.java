@@ -33,7 +33,7 @@ public class CCalendarActivity extends QCircleActivity {
 	protected Intent getIntentForOpenCase() {
 		try {
 			long id = ((EventsFragment_) (getFragmentManager().findFragmentByTag("android:switcher:" + R.id.calendar_pager + ":" + pager.getCurrentItem()))).event.getId();
-			return CalendarUtil.launchEventById(id);
+			return CalendarUtil.launchEventById(id).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		} catch (Exception exception) {
 			return null;
 		}

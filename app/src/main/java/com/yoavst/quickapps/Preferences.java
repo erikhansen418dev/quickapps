@@ -51,6 +51,9 @@ public interface Preferences {
 	@DefaultBoolean(false)
 	boolean g2Mode();
 
+	@DefaultBoolean(false)
+	boolean startActivityOnNotification();
+
 	@DefaultInt(0)
 	int highScoreInSimon();
 

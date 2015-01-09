@@ -1,13 +1,13 @@
 package com.yoavst.quickapps.notifications;
 
 import android.app.Notification;
+import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by Yoav.
@@ -15,11 +15,15 @@ import java.util.Comparator;
 public class NotificationsManager {
 	private static ArrayList<StatusBarNotification> notifications;
 	private static final Object LOCK = new Object();
+	private static boolean isWhatsapp = false;
+
 	public static ArrayList<StatusBarNotification> getNotifications() {
 		return notifications;
 	}
 
-	public static int getCount() { return notifications == null ? 0 : notifications.size(); }
+	public static int getCount() {
+		return notifications == null ? 0 : notifications.size();
+	}
 
 	public static void clean() {
 		notifications = null;
@@ -29,7 +33,23 @@ public class NotificationsManager {
 		synchronized (LOCK) {
 			if (newNotifications == null || newNotifications.size() == 0)
 				notifications = new ArrayList<>(0);
-			else {
+			else if (isWhatsapp) {
+				ArrayList<StatusBarNotification> whatsapp = new ArrayList<>();
+				for (int i = newNotifications.size() - 1; i >= 0; i--) {
+					if (newNotifications.get(i).getPackageName().equals("com.whatsapp")) {
+						whatsapp.add(notifications.get(i));
+					} else {
+						Bundle extras = newNotifications.get(i).getNotification().extras;
+						String title = extras.getString(Notification.EXTRA_TITLE);
+						if (!(title == null || title.length() == 0))
+							notifications.add(newNotifications.get(i));
+					}
+				}
+				for (StatusBarNotification statusBarNotification : whatsapp) {
+					//FIXME
+					notifications.add(statusBarNotification);
+				}
+			} else {
 				notifications = new ArrayList<>(newNotifications.size());
 				for (int i = newNotifications.size() - 1; i >= 0; i--) {
 					Bundle extras = newNotifications.get(i).getNotification().extras;
@@ -39,6 +59,7 @@ public class NotificationsManager {
 				}
 				sort();
 			}
+			isWhatsapp = false;
 		}
 	}
 
@@ -73,7 +94,7 @@ public class NotificationsManager {
 		try {
 			return first.getPostTime() == second.getPostTime() &&
 					first.getId() == second.getId() &&
-					equals(first.getPackageName(),second.getPackageName())
+					equals(first.getPackageName(), second.getPackageName())
 					&& equals(first.getTag(), second.getTag());
 		} catch (Exception e) {
 			return false;
@@ -81,8 +102,12 @@ public class NotificationsManager {
 	}
 
 	private static void sort() {
-		if (notifications.size() >= 2)
-			Collections.sort(notifications, (lhs, rhs) -> lhs.isClearable() ? (rhs.isClearable() ? 0 : -1) : (rhs.isClearable() ? 0 : -1));
+		if (notifications.size() >= 2) {
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+				Collections.sort(notifications, (lhs, rhs) -> lhs.isClearable() ? (rhs.isClearable() ? 0 : -1) : (rhs.isClearable() ? 0 : -1));
+			else
+				Collections.sort(notifications, (lhs, rhs) -> rhs.getNotification().priority - lhs.getNotification().priority);
+		}
 	}
 
 	private static boolean equals(String a, String b) {
@@ -90,5 +115,9 @@ public class NotificationsManager {
 	}
 
 	private NotificationsManager() {
+	}
+
+	public static void whatsapp() {
+		isWhatsapp = true;
 	}
 }

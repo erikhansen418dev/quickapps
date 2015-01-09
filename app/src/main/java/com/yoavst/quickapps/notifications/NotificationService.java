@@ -8,6 +8,9 @@ import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import com.yoavst.quickapps.CoverReceiver;
+import com.yoavst.quickapps.Preferences_;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,6 +25,9 @@ public class NotificationService extends NotificationListenerService {
 	@Override
 	public void onNotificationPosted(StatusBarNotification sbn) {
 		if (callback != null) callback.onNotificationPosted(sbn);
+		else if (CoverReceiver.isCoverInUse() && new Preferences_(this).startActivityOnNotification().get()){
+			startActivity(new Intent(this, CNotificationActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+		}
 	}
 
 	@Override
@@ -61,6 +67,7 @@ public class NotificationService extends NotificationListenerService {
 		try {
 			NotificationsManager.setNotifications(new ArrayList<>(Arrays.asList(getActiveNotifications())));
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			callback.noPermissionForNotifications();
 		}
 	}

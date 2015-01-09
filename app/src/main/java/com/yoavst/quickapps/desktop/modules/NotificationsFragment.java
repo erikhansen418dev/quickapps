@@ -40,17 +40,18 @@ public class NotificationsFragment extends BaseModuleFragment implements Compoun
 
 	@Override
 	int[] getIdsForCheckboxes() {
-		return new int[]{R.id.privacy_checkbox,R.id.am_pm_checkbox};
+		return new int[]{R.id.privacy_checkbox,R.id.am_pm_checkbox, R.id.auto_launch_checkbox};
 	}
 
 	@Override
 	int[] getIdsForRows() {
-		return new int[]{R.id.privacy_row, R.id.am_pm_row};
+		return new int[]{R.id.privacy_row, R.id.am_pm_row, R.id.auto_launch_row};
 	}
 
 	@Override
 	boolean shouldCheck(int id) {
 		if (id == R.id.privacy_checkbox) return prefs.notificationShowContent().get();
+		else if (id == R.id.auto_launch_checkbox) return prefs.startActivityOnNotification().get();
 		else return prefs.amPmInNotifications().get();
 	}
 
@@ -65,6 +66,10 @@ public class NotificationsFragment extends BaseModuleFragment implements Compoun
 				break;
 			case R.id.am_pm_checkbox:
 				prefs.amPmInNotifications().put(isChecked);
+				Toast.makeText(getActivity(), R.string.changed_successfully,Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.auto_launch_checkbox:
+				prefs.startActivityOnNotification().put(isChecked);
 				Toast.makeText(getActivity(), R.string.changed_successfully,Toast.LENGTH_SHORT).show();
 				break;
 		}

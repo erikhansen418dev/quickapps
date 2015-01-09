@@ -118,7 +118,42 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/auto_launch_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="22dp"
+                android:clickable="true"
+                android:background="?selectableItemBackground"
+                android:orientation="horizontal">
 
+                <CheckBox
+                    android:id="@+id/auto_launch_checkbox"
+                    android:layout_width="wrap_content"
+                    android:checked="false"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="@string/auto_launch_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <TextView
+                        android:text="@string/auto_launch_subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

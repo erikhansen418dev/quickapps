@@ -116,6 +116,8 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 						cursor.getInt(cursor.getColumnIndex("_id")));
 				i++;
 			} while (cursor.moveToNext());
+		} else {
+			components = new ComponentWrapper[0];
 		}
 	}
 	public static boolean hasSettings(Context context) {

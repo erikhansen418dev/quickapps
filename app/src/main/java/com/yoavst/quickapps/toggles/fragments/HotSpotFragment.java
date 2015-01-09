@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.toggles.fragments;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.provider.Settings;
@@ -56,6 +57,11 @@ public class HotSpotFragment extends ToggleFragment {
 
 	@Override
 	public Intent getIntentForLaunch() {
-		return new Intent(Settings.ACTION_WIFI_SETTINGS);
+		final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.TetherSettings");
+		intent.setComponent(cn);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		return intent;
 	}
 }

@@ -1,6 +1,7 @@
 package com.yoavst.quickapps.desktop.modules;
 
 import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,14 @@ public class TogglesFragment extends BaseModuleFragment {
 		if (prefs.togglesItems().exists())
 			items = new Gson().fromJson(prefs.togglesItems().get(), TogglesAdapter.listType);
 		else items = TogglesAdapter.initDefaultToggles(getActivity());
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			for (int i = 0; i < items.size(); i++) {
+				if (items.get(i).id == 1) {
+					items.remove(i);
+					break;
+				}
+			}
+		}
 	}
 
 	void clickRow(View view) {
@@ -77,14 +86,14 @@ public class TogglesFragment extends BaseModuleFragment {
 	private class Adapter extends ArrayAdapter<TogglesAdapter.ToggleItem> {
 
 		public Adapter() {
-			super(getActivity(), android.R.layout.simple_list_item_1, items);
+			super(getActivity(), R.layout.desktop_module_toggle_item, items);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = LayoutInflater.from(getActivity()).inflate(android.R.layout.simple_list_item_1, parent, false);
+				convertView = LayoutInflater.from(getActivity()).inflate(R.layout.desktop_module_toggle_item, parent, false);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else holder = (ViewHolder) convertView.getTag();

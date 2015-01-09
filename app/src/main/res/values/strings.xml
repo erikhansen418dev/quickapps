@@ -138,6 +138,8 @@
     <string name="g2_mode">G2 mode</string>
     <string name="g3_mode">G3 mode</string>
     <string name="show_settings_from_quick_circle">Show settings on Quick Circle</string>
+    <string name="auto_launch_title">Auto launch on notification</string>
+    <string name="auto_launch_subtitle">The module will be opned automatically if on quick circle case and received notification</string>
     <string-array name="magic_ball">
         <item>It is certain</item>
         <item>It is decidedly so</item>
