@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'retrolambda'
 apply plugin: 'android-apt'
+apply from: 'https://gist.githubusercontent.com/stefanhoth/37f86c8e41d648cbd2c8/raw/49ca13d028885cae89f7da949f11069365aefeec/idea-gradle-sources.gradle'
 
 android {
     compileSdkVersion 21
@@ -10,8 +11,8 @@ android {
         applicationId "com.yoavst.quickapps"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 54
-        versionName "3.6"
+        versionCode 56
+        versionName "3.7"
         resConfigs "ar","ca","de","es","fi","fr","he","hu","it","iw","ko","nl","pl","pt","ru","tr"
         resConfigs "xhdpi", "xxhdpi", "xxxhdpi"
     }

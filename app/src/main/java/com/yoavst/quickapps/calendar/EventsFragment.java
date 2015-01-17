@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yoavst.quickapps.Preferences_;
+import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
 
 import org.androidannotations.annotations.AfterViews;
@@ -36,6 +37,7 @@ public class EventsFragment extends Fragment {
 
 	@AfterViews
 	void init() {
+		getView().setOnTouchListener((v, e) -> ((QCircleActivity) getActivity()).gestureDetector.onTouchEvent(e));
 		CalendarUtil.CalendarResources.init(getActivity());
 		title.setText(event.getTitle());
 		if (!prefs.showLocation().get() || event.getLocation() == null || event.getLocation().length() == 0)

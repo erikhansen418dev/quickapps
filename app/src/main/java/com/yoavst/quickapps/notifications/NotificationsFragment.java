@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.notifications;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.Notification;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yoavst.quickapps.Preferences_;
+import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.calendar.DateUtils;
 
@@ -46,8 +48,11 @@ public class NotificationsFragment extends Fragment {
 	static String yesterday;
 	@Pref
 	Preferences_ mPrefs;
+	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat dayFormatter = new SimpleDateFormat("MMM d");
+	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat hourFormatter = new SimpleDateFormat("HH:mm");
+	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat hourFormatterAmPm = new SimpleDateFormat("hh:mm a");
 
 	public StatusBarNotification getNotification() {
@@ -56,6 +61,7 @@ public class NotificationsFragment extends Fragment {
 
 	@AfterViews
 	void init() {
+		getView().setOnTouchListener((v,e) -> ((QCircleActivity) getActivity()).gestureDetector.onTouchEvent(e));
 		if (today == null || yesterday == null) {
 			today = getString(R.string.today);
 			yesterday = getString(R.string.yesterday);
@@ -63,7 +69,7 @@ public class NotificationsFragment extends Fragment {
 		if (notification != null) {
 			delete.setVisibility(notification.isClearable() ? View.VISIBLE : View.GONE);
 			Bundle extras = notification.getNotification().extras;
-			notificationTitle.setText(extras.getString(Notification.EXTRA_TITLE));
+			notificationTitle.setText(extras.getCharSequence(Notification.EXTRA_TITLE));
 			try {
 				notificationIcon.setImageDrawable(getActivity().createPackageContext(notification.getPackageName(), 0).getResources().getDrawable(notification.getNotification().icon));
 			} catch (PackageManager.NameNotFoundException | Resources.NotFoundException ignored) {

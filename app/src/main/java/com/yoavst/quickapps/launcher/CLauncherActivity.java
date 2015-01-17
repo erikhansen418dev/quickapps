@@ -80,7 +80,7 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 
 	void init() {
 		prefs = new Preferences_(this);
-		if (!prefs.showAppsThatInLg().get())
+		if (components == null && !prefs.showAppsThatInLg().get())
 			updateComponents(this);
 		ArrayList<ListItem> allItems = getIconsFromPrefs(this);
 		items = new ArrayList<>(allItems.size());
@@ -105,7 +105,7 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 		getFragmentManager().beginTransaction().replace(TemplateTag.CONTENT_MAIN, isVertical ? new VerticalFragment() : new HorizontalFragment()).commit();
 	}
 
-	private static void updateComponents(Context context) {
+	public static void updateComponents(Context context) {
 		Uri uri = Uri.parse("content://com.lge.lockscreensettings/quickwindow");
 		Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 		if (cursor != null && cursor.moveToFirst()) {
@@ -116,6 +116,7 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 						cursor.getInt(cursor.getColumnIndex("_id")));
 				i++;
 			} while (cursor.moveToNext());
+			cursor.close();
 		} else {
 			components = new ComponentWrapper[0];
 		}
@@ -296,13 +297,16 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 				defaultItems.add(item);
 			}
 		}
-		prefs.launcherItems().put(gson.toJson(defaultItems, listType));
 		return defaultItems;
 	}
 
 	public static ArrayList<ListItem> getIconsFromPrefs(Context context) {
 		Preferences_ prefs = new Preferences_(context);
-		if (!prefs.launcherItems().exists()) return initDefaultIcons(context);
+		if (!prefs.launcherItems().exists()) {
+			initDefaultIcons(context);
+			prefs.launcherItems().put(gson.toJson(defaultItems, listType));
+			return defaultItems;
+		}
 		else {
 			ArrayList<ListItem> items = gson.fromJson(prefs.launcherItems().get(), listType);
 			if (defaultItems == null) initDefaultIcons(context);
@@ -347,6 +351,11 @@ public class CLauncherActivity extends QCircleActivity implements View.OnClickLi
 		unregisterReceiver(appInstalledReceiver);
 		unregisterReceiver(appRemovedReceiver);
 		super.onPause();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return null;
 	}
 
 	public static class ListItem {

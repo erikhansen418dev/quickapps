@@ -22,7 +22,6 @@ public class CCalendarActivity extends QCircleActivity {
 		template.setTitle(getString(R.string.calendar_module_name), Color.WHITE, getResources().getColor(R.color.md_green_500));
 		template.setTitleTextSize(17);
 		template.setBackButton();
-		template.setFullscreenIntent(this::getIntentForOpenCase);
 		pager = new ViewPager(this);
 		pager.setId(R.id.calendar_pager);
 		pager.setAdapter(new EventsAdapter(getFragmentManager(), this));
@@ -30,7 +29,8 @@ public class CCalendarActivity extends QCircleActivity {
 		setContentView(template.getView());
 	}
 
-	protected Intent getIntentForOpenCase() {
+	@Override
+	protected Intent getIntentToShow() {
 		try {
 			long id = ((EventsFragment_) (getFragmentManager().findFragmentByTag("android:switcher:" + R.id.calendar_pager + ":" + pager.getCurrentItem()))).event.getId();
 			return CalendarUtil.launchEventById(id).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

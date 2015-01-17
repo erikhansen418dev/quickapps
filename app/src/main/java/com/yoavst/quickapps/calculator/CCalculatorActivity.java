@@ -45,13 +45,17 @@ public class CCalculatorActivity extends QCircleActivity {
 		super.onCreate(savedInstanceState);
 		template = new QCircleTemplate(this);
 		template.setBackButton();
-		template.setFullscreenIntent(App.createExplicitFromImplicitIntent(this,new Intent().setClassName("com.android.calculator2",
-				"com.android.calculator2.Calculator").putExtra("com.lge.app.floating.launchAsFloating", new Preferences_(this).calculatorForceFloating().get())));
 		RelativeLayout main = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		LinearLayout layout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.calculator_circle_layout, main, false);
 		main.addView(layout);
 		setContentView(template.getView());
 		init(layout);
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return App.createExplicitFromImplicitIntent(this, new Intent().setClassName("com.android.calculator2",
+				"com.android.calculator2.Calculator").putExtra("com.lge.app.floating.launchAsFloating", new Preferences_(this).calculatorForceFloating().get()));
 	}
 
 	private void init(LinearLayout layout) {

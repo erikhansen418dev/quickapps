@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.simon;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,6 +85,11 @@ public class CSimonActivity extends QCircleActivity {
 				newRound();
 			}, 1500);
 		});
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return null;
 	}
 
 	void newRound() {

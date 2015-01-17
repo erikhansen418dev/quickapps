@@ -1,8 +1,10 @@
 package com.yoavst.quickapps.news;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.widget.TextView;
 
+import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.news.types.Entry;
 
@@ -27,10 +29,12 @@ public class NewsFragment extends Fragment {
 	TextView mSource;
 	@FragmentArg
 	int entryNumber = -1;
+	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat dayFormatter = new SimpleDateFormat("MMM d, HH:mm");
 
 	@AfterViews
 	void init() {
+		getView().setOnTouchListener((v,e) -> ((QCircleActivity) getActivity()).gestureDetector.onTouchEvent(e));
 		Entry entry =  NewsAdapter.getEntry(entryNumber);
 		if (entry != null) {
 			mTitle.setText(entry.getTitle());

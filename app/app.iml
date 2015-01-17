@@ -86,29 +86,29 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="materialicons-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-21.0.0" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="materialicons-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="aspectjrt-1.8.2" level="project" />
-    <orderEntry type="library" exported="" name="library-4.4.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
-    <orderEntry type="library" exported="" name="library-1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="LGQSlideAPIs" level="project" />
+    <orderEntry type="library" exported="" name="support-v13-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="viewpagerindicator-2.4.1" level="project" />
+    <orderEntry type="library" exported="" name="scribe-1.3.5" level="project" />
+    <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.3" level="project" />
+    <orderEntry type="library" exported="" name="androidannotations-api-3.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="roundedimageview-1.5.0" level="project" />
-    <orderEntry type="library" exported="" name="qcircle-design-template-1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="libphonenumber-6.2.2" level="project" />
+    <orderEntry type="library" exported="" name="play-services-6.5.87" level="project" />
+    <orderEntry type="library" exported="" name="library-4.4.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="library-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="qcircle-design-template-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="LGQSlideAPIs" level="project" />
-    <orderEntry type="library" exported="" name="androidannotations-api-3.2" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="isoparser-1.0.5.4" level="project" />
-    <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
-    <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.3" level="project" />
-    <orderEntry type="library" exported="" name="scribe-1.3.5" level="project" />
-    <orderEntry type="library" exported="" name="support-v13-21.0.0" level="project" />
+    <orderEntry type="library" exported="" name="library-1.1.2" level="project" />
+    <orderEntry type="library" exported="" name="libphonenumber-6.2.2" level="project" />
+    <orderEntry type="library" exported="" name="library-1.0.0" level="project" />
     <orderEntry type="module" module-name="navdrawer" exported="" />
   </component>
 </module>

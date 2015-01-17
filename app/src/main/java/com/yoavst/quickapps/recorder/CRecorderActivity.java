@@ -46,14 +46,6 @@ public class CRecorderActivity extends QCircleActivity {
 		template = new QCircleTemplate(this);
 		RelativeLayout layout = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		layout.addView(LayoutInflater.from(this).inflate(R.layout.recorder_circle_layout, layout, false));
-		template.setFullscreenIntent(() -> {
-			pause(() -> audioRecorder = null);
-			try {
-				return getPackageManager().getLaunchIntentForPackage("com.lge.voicerecorder").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			} catch (Exception e) {
-				return null;
-			}
-		});
 		template.setBackButton(v -> {
 			if (audioRecorder != null && audioRecorder.isRecording()) {
 				audioRecorder.pause(new AudioRecorder.OnPauseListener() {
@@ -90,6 +82,16 @@ public class CRecorderActivity extends QCircleActivity {
 		recorder = (RecordButton) findViewById(R.id.recorder);
 		recorder.setOnClickListener(this::recordOrStop);
 		hideHelperButtons();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		pause(() -> audioRecorder = null);
+		try {
+			return getPackageManager().getLaunchIntentForPackage("com.lge.voicerecorder").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	void hideHelperButtons() {
@@ -151,17 +153,23 @@ public class CRecorderActivity extends QCircleActivity {
 			new Handler().postDelayed(() -> recorder.setEnabled(true), 500);
 		} else {
 			hideHelperButtons();
-			pause(() -> new QCircleDialog.Builder()
-					.setTitle(getString(R.string.voice_recorded))
-					.setMode(QCircleDialog.DialogMode.Ok)
-					.setText(getString(R.string.successfully_record_audio))
-					.setPositiveButtonListener(v1 -> recorder.setEnabled(true))
-					.create()
-					.show(this, template));
+			if (audioRecorder.isRecording())
+				pause(this::showRecordedDialog);
+			else showRecordedDialog();
 			stopCounting();
 			recorder.setNotRecording();
 			audioRecorder = null;
 		}
+	}
+
+	void showRecordedDialog() {
+		new QCircleDialog.Builder()
+				.setTitle(getString(R.string.voice_recorded))
+				.setMode(QCircleDialog.DialogMode.Ok)
+				.setText(getString(R.string.successfully_record_audio))
+				.setPositiveButtonListener(v1 -> recorder.setEnabled(true))
+				.create()
+				.show(this, template);
 	}
 
 	void pause(Runnable onSuccess) {

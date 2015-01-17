@@ -21,9 +21,6 @@ import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.news.types.Entry;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.ViewById;
 import org.scribe.model.Token;
 
 import java.util.ArrayList;
@@ -50,11 +47,22 @@ public class CNewsActivity extends QCircleActivity implements DownloadManager.Do
 		template.setBackButton();
 		template.setTitle(getString(R.string.news_module_name), Color.WHITE, getResources().getColor(R.color.md_teal_900));
 		template.setTitleTextSize(17);
-		template.setFullscreenIntent(this::getIntentForOpenCase);
 		template.getLayoutById(TemplateTag.CONTENT_MAIN).addView(LayoutInflater.from(this).
 				inflate(R.layout.news_circle_container_layout, template.getLayoutById(TemplateTag.CONTENT_MAIN), false));
 		setContentView(template.getView());
 		init();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		if (shouldOpenLogin)
+			return LoginActivity_.intent(this).get();
+		else if (entries == null || entries.size() == 0)
+			return null;
+		else {
+			int id = ((NewsFragment_) (getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + pager.getCurrentItem()))).entryNumber;
+			return new Intent(Intent.ACTION_VIEW, Uri.parse(NewsAdapter.getEntry(id).getAlternate().get(0).getHref()));
+		}
 	}
 
 	void init() {
@@ -171,16 +179,5 @@ public class CNewsActivity extends QCircleActivity implements DownloadManager.Do
 					break;
 			}
 		});
-	}
-
-	protected Intent getIntentForOpenCase() {
-		if (shouldOpenLogin)
-			return LoginActivity_.intent(this).get();
-		else if (entries == null || entries.size() == 0)
-			return null;
-		else {
-			int id = ((NewsFragment_) (getFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + pager.getCurrentItem()))).entryNumber;
-			return new Intent(Intent.ACTION_VIEW, Uri.parse(NewsAdapter.getEntry(id).getAlternate().get(0).getHref()));
-		}
 	}
 }

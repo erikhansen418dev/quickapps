@@ -53,7 +53,7 @@ public class NotificationsManager {
 				notifications = new ArrayList<>(newNotifications.size());
 				for (int i = newNotifications.size() - 1; i >= 0; i--) {
 					Bundle extras = newNotifications.get(i).getNotification().extras;
-					String title = extras.getString(Notification.EXTRA_TITLE);
+					CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
 					if (!(title == null || title.length() == 0))
 						notifications.add(newNotifications.get(i));
 				}

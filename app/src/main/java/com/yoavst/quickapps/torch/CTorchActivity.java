@@ -32,10 +32,8 @@ public class CTorchActivity extends QCircleActivity {
 		colorTorchOff = getResources().getColor(R.color.torch_color_off);
 		colorTorchOn = getResources().getColor(R.color.torch_color_on);
 		template = new QCircleTemplate(this, TemplateType.CIRCLE_EMPTY);
-		template.setFullscreenIntent(new Intent(this, PhoneActivity.class));
 		RelativeLayout main = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		icon = (TextView) getLayoutInflater().inflate(R.layout.torch_layout, main, false);
-		main.setOnClickListener((view) -> toggleTorch());
 		main.addView(icon);
 		template.setBackButton((view) -> {
 			CameraManager.disableTorch();
@@ -43,6 +41,11 @@ public class CTorchActivity extends QCircleActivity {
 			notificationManager.cancel(NotificationReceiver.NOTIFICATION_ID);
 		});
 		setContentView(template.getView());
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return new Intent(this, PhoneActivity.class);
 	}
 
 	@Override
@@ -80,5 +83,11 @@ public class CTorchActivity extends QCircleActivity {
 		icon.setTextColor(colorTorchOff);
 		template.setBackButtonTheme(true);
 		template.setBackgroundColor(getResources().getColor(R.color.torch_background_color_off), true);
+	}
+
+	@Override
+	protected boolean onSingleTapConfirmed() {
+		toggleTorch();
+		return true;
 	}
 }

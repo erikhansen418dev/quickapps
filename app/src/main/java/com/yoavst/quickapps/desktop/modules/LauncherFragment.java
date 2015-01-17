@@ -34,6 +34,7 @@ public class LauncherFragment extends BaseModuleFragment {
 		public void onReceive(Context context, Intent intent) {
 			CLauncherActivity.defaultItems = null;
 			mItems = CLauncherActivity.getIconsFromPrefs(getActivity());
+			CLauncherActivity.initDefaultIcons(getActivity());
 			sortItems();
 		}
 	};
@@ -93,6 +94,7 @@ public class LauncherFragment extends BaseModuleFragment {
 			mItems = CLauncherActivity.initDefaultIcons(getActivity());
 		sortItems();
 		view.findViewById(R.id.modules_order_row).setOnClickListener(v -> onOpenSettingsClicked());
+
 	}
 
 	void sortItems() {

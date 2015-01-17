@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.clock;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -48,7 +49,6 @@ public class CStopwatchActivity extends QCircleActivity {
 		template.setBackButton();
 		template.setTitle(getString(R.string.clock_module_name), Color.WHITE, getResources().getColor(R.color.clock_theme_color));
 		template.setTitleTextSize(17);
-		template.setFullscreenIntent(PhoneActivity_.intent(this).get().putExtra("com.lge.app.floating.launchAsFloating", true));
 		RelativeLayout main = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.stopwatch_circle_layout, main, false);
 		main.addView(relativeLayout);
@@ -74,6 +74,11 @@ public class CStopwatchActivity extends QCircleActivity {
 	public void onPause() {
 		super.onPause();
 		StopwatchManager.runOnBackground();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return PhoneActivity_.intent(this).get().putExtra("com.lge.app.floating.launchAsFloating", true);
 	}
 
 	void initCallback() {

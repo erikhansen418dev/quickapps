@@ -56,12 +56,16 @@ public class CDialerActivity extends QCircleActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		template = new QCircleTemplate(this);
-		template.setFullscreenIntent(new Intent().setClassName("com.android.contacts",
-				"alias.PeopleFloatingActivity").putExtra("com.lge.app.floating.launchAsFloating", true));
 		RelativeLayout main = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		main.addView(LayoutInflater.from(this).inflate(R.layout.dialer_circle_layout, main, false));
 		setContentView(template.getView());
 		init();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return new Intent().setClassName("com.android.contacts",
+				"alias.PeopleFloatingActivity").putExtra("com.lge.app.floating.launchAsFloating", true);
 	}
 
 	private void init() {
@@ -237,11 +241,11 @@ public class CDialerActivity extends QCircleActivity {
 		String CountryID = "";
 		String CountryZipCode = "";
 		TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		CountryID = manager.getSimCountryIso().toUpperCase();
+		CountryID = manager.getSimCountryIso().toUpperCase().trim();
 		String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
 		for (String aRl : rl) {
 			String[] g = aRl.split(",");
-			if (g[1].trim().equals(CountryID.trim())) {
+			if (g[1].trim().equals(CountryID)) {
 				CountryZipCode = g[0];
 				break;
 			}

@@ -48,7 +48,6 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 		template.setTitle(getString(R.string.notification_module_name), Color.WHITE, getResources().getColor(R.color.md_orange_A400));
 		template.setTitleTextSize(17);
 		template.setBackButton();
-		template.setFullscreenIntent(this::getIntentForOpenCase);
 		RelativeLayout main = template.getLayoutById(TemplateTag.CONTENT_MAIN);
 		main.addView(LayoutInflater.from(this).inflate(R.layout.notification_circle_container_layout, main, false));
 		setContentView(template.getView());
@@ -143,20 +142,6 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 		}
 	}
 
-	protected Intent getIntentForOpenCase() {
-		if (shouldRegister)
-			return new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-		else {
-			try {
-				StatusBarNotification statusBarNotification = getActiveFragment().getNotification();
-				statusBarNotification.getNotification().contentIntent.send();
-			} catch (Exception e) {
-				// Do nothing
-			}
-			return null;
-		}
-	}
-
 	private void showEmpty() {
 		hideContent();
 		errorLayout.setVisibility(View.VISIBLE);
@@ -203,6 +188,21 @@ public class CNotificationActivity extends QCircleActivity implements ServiceCon
 		bindService(App.createExplicitFromImplicitIntent(this, new Intent(this,
 						NotificationService.class).setAction(NotificationService.NOTIFICATION_ACTION)), this,
 				Context.BIND_AUTO_CREATE);
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		if (shouldRegister)
+			return new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+		else {
+			try {
+				StatusBarNotification statusBarNotification = getActiveFragment().getNotification();
+				statusBarNotification.getNotification().contentIntent.send();
+			} catch (Exception e) {
+				// Do nothing
+			}
+			return null;
+		}
 	}
 
 	@Override

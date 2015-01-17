@@ -56,6 +56,7 @@ public class CMusicActivity extends QCircleActivity {
 	private AbstractRemoteControlService mRCService;
 	private boolean bound = false;
 	private boolean isPlaying = false;
+	private boolean shouldShowRegister = false;
 	protected long songDuration = 1;
 
 	@Override
@@ -66,10 +67,6 @@ public class CMusicActivity extends QCircleActivity {
 		// Semi transparent back button
 		template.setBackButtonTheme(true);
 		template.setBackgroundColor(Color.WHITE, true);
-		template.setFullscreenIntent(() -> {
-			if (bound && mRCService != null) return mRCService.getCurrentClientIntent();
-			return null;
-		});
 		RelativeLayout contentParent = (RelativeLayout) template.getLayoutById(TemplateTag.CONTENT).getParent();
 		LinearLayout layoutForButtons = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.music_circle_button_layout, contentParent, false);
 		playPauseButton = (TextView) layoutForButtons.findViewById(R.id.pause_start);
@@ -141,6 +138,16 @@ public class CMusicActivity extends QCircleActivity {
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			showUnregistered();
+		}
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		if (shouldShowRegister) {
+			return new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+		} else {
+			if (bound && mRCService != null) return mRCService.getCurrentClientIntent();
+			return null;
 		}
 	}
 
@@ -240,7 +247,7 @@ public class CMusicActivity extends QCircleActivity {
 	};
 
 	void showUnregistered() {
-		template.setFullscreenIntent(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+		shouldShowRegister = true;
 		artistText.setText(R.string.register_us_please);
 		titleText.setText(R.string.open_the_case);
 	}

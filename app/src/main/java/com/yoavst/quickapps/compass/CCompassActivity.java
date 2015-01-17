@@ -24,7 +24,6 @@ public class CCompassActivity extends QCircleActivity {
 		template = new QCircleTemplate(this, TemplateType.CIRCLE_EMPTY);
 		template.setBackButton();
 		template.setBackButtonTheme(true);
-		template.setFullscreenIntent(new Intent(this,PhoneActivity.class).putExtra("com.lge.app.floating.launchAsFloating", true));
 		template.setBackgroundDrawable(getResources().getDrawable(R.drawable.compass_back), true);
 		RelativeLayout mainLayout = (RelativeLayout) template.getLayoutById(TemplateTag.CONTENT).getParent();
 		ImageView needle = (ImageView) LayoutInflater.from(this).inflate(R.layout.compass_circle_layout, mainLayout, false);
@@ -43,5 +42,10 @@ public class CCompassActivity extends QCircleActivity {
 	protected void onPause() {
 		super.onPause();
 		compass.unregisterService();
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return new Intent(this,PhoneActivity.class).putExtra("com.lge.app.floating.launchAsFloating", true);
 	}
 }

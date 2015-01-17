@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.desktop;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
@@ -75,6 +76,8 @@ public class MainActivity extends MaterialNavigationDrawer {
 				e.printStackTrace();
 			}
 		});
+
+		findViewById(R.id.admin_switch).setOnClickListener(v -> startActivity(new Intent(this, LaunchAdminActivity.class)));
 		AdView adView = (AdView) findViewById(R.id.adView);
 		adView.setAdListener(new AdListener() {
 			@Override

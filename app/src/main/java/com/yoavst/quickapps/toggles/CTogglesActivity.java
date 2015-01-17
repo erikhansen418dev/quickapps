@@ -36,13 +36,17 @@ public class CTogglesActivity extends QCircleActivity {
 		template.setBackButton();
 		template.setTitle(getString(R.string.toggles_module_name), Color.WHITE, getResources().getColor(R.color.md_indigo_700));
 		template.setTitleTextSize(17);
-		template.setFullscreenIntent(() -> ((ToggleFragment)
-				(getFragmentManager().findFragmentByTag("android:switcher:" + R.id.toggles_pager + ":" + pager.getCurrentItem()))).getIntentForLaunch().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 		pager = new ViewPager(this);
 		pager.setId(R.id.toggles_pager);
 		pager.setAdapter(new TogglesAdapter(getFragmentManager(), this));
 		template.getLayoutById(TemplateTag.CONTENT_MAIN).addView(pager);
 		setContentView(template.getView());
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return ((ToggleFragment)
+				(getFragmentManager().findFragmentByTag("android:switcher:" + R.id.toggles_pager + ":" + pager.getCurrentItem()))).getIntentForLaunch().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	}
 
 	public Resources getSystemUiResource() {

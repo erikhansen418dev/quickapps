@@ -21,18 +21,15 @@
 package com.yoavst.quickapps.news;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.lge.qcircle.template.QCircleTemplate;
-import com.yoavst.quickapps.QCircleActivity;
 import com.yoavst.quickapps.R;
 import com.yoavst.quickapps.URLEncodedUtils;
 
@@ -52,7 +49,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @EActivity
-public class LoginActivity extends QCircleActivity {
+public class LoginActivity extends Activity {
 	@Pref
 	Prefs_ mPrefs;
 	@Bean

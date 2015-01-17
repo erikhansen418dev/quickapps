@@ -1,5 +1,6 @@
 package com.yoavst.quickapps.ball;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ public class CMagic8BallActivity extends QCircleActivity {
 	TextView text;
 	String[] answers;
 	Random random = new Random();
+	RelativeLayout layout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,8 +35,34 @@ public class CMagic8BallActivity extends QCircleActivity {
 		template.setBackButtonTheme(true);
 		template.setBackgroundColor(getResources().getColor(R.color.md_indigo_500), true);
 		text = generateTextView();
-		RelativeLayout layout = template.getLayoutById(TemplateTag.CONTENT_MAIN);
-		layout.setOnClickListener(v -> YoYo.with(Techniques.Shake)
+		layout = template.getLayoutById(TemplateTag.CONTENT_MAIN);
+		layout.addView(text);
+		setContentView(template.getView());
+	}
+
+	@Override
+	protected Intent getIntentToShow() {
+		return null;
+	}
+
+	private TextView generateTextView() {
+		TextView textView = new TextView(this);
+		textView.setTextColor(Color.WHITE);
+		textView.setTextSize(35);
+		textView.setGravity(Gravity.CENTER);
+		textView.setText(R.string.ask_a_question);
+		textView.setId(android.R.id.text1);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+		params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.padding_start));
+		params.setMarginEnd(getResources().getDimensionPixelSize(R.dimen.padding_end));
+		textView.setLayoutParams(params);
+		return textView;
+	}
+
+	@Override
+	protected boolean onSingleTapConfirmed() {
+		YoYo.with(Techniques.Shake)
 				.duration(1000)
 				.withListener(new Animator.AnimatorListener() {
 					@Override
@@ -56,23 +84,7 @@ public class CMagic8BallActivity extends QCircleActivity {
 					public void onAnimationRepeat(Animator animation) {
 					}
 				})
-				.playOn(v));
-		layout.addView(text);
-		setContentView(template.getView());
-	}
-
-	private TextView generateTextView() {
-		TextView textView = new TextView(this);
-		textView.setTextColor(Color.WHITE);
-		textView.setTextSize(35);
-		textView.setGravity(Gravity.CENTER);
-		textView.setText(R.string.ask_a_question);
-		textView.setId(android.R.id.text1);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-		params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.padding_start));
-		params.setMarginEnd(getResources().getDimensionPixelSize(R.dimen.padding_end));
-		textView.setLayoutParams(params);
-		return textView;
+				.playOn(layout);
+		return true;
 	}
 }

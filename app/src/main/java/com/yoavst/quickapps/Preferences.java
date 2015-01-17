@@ -54,6 +54,9 @@ public interface Preferences {
 	@DefaultBoolean(false)
 	boolean startActivityOnNotification();
 
+	@DefaultBoolean(true)
+	boolean showDoubleTapDialog();
+
 	@DefaultInt(0)
 	int highScoreInSimon();
 
