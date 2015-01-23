@@ -141,6 +141,15 @@
     <string name="show_settings_from_quick_circle">Показывать настройки в Quick Circle</string>
     <string name="auto_launch_title">Автозапуск при уведомлении</string>
     <string name="auto_launch_subtitle">Модуль автоматически откроется при наличии чехла quick circle и получении уведомления</string>
+    <string name="start_record">Начать запись</string>
+    <string name="voice_recorded">Запись выполнена</string>
+    <string name="successfully_record_audio">Аудио успешно записано. Файл сохранён в папке VoiceRecorder на sd-карте.</string>
+    <string name="delete_record">Запись удалена</string>
+    <string name="error_no_permission_for_lock_the_screen">Откройте чехол для включения разрешений экрана блокировки для этого приложения!</string>
+    <string name="missing_permissions">Нет разрешений</string>
+    <string name="dont_show_again">Не показывать</string>
+    <string name="add_admin_extra_app_text">Блокировка двойным нажатием</string>
+    <string name="admin_permission">Вкл администратора для dt2s</string>
     <string-array name="magic_ball">
         <item>Это однозначно</item>
         <item>Определённо так</item>
